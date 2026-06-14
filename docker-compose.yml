@@ -1,0 +1,13 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./out:/app/out
+    environment:
+      - SECRET_KEY=${SECRET_KEY:-change-me-in-prod}
+      - AUTH_USER=${AUTH_USER:-}
+      - AUTH_PASS=${AUTH_PASS:-}
+      - SLA_MINUTES=${SLA_MINUTES:-60}
+    restart: unless-stopped

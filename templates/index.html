@@ -104,14 +104,14 @@
           </div>
           <div>
             <label class="block text-xs font-medium text-gray-500 mb-1.5">Date start</label>
-            <input type="date" name="date_start" value="{{ request.form.get('date_start', '') }}"
+            <input type="date" name="date_start" value="{{ form_date_start }}"
               class="block w-full text-sm border border-gray-300 rounded-md px-3 py-2 bg-white text-gray-700
                      focus:outline-none focus:ring-2 focus:ring-blue-500" />
             <p class="text-xs text-gray-400 mt-1">Filter on received_at</p>
           </div>
           <div>
             <label class="block text-xs font-medium text-gray-500 mb-1.5">Date end</label>
-            <input type="date" name="date_end" value="{{ request.form.get('date_end', '') }}"
+            <input type="date" name="date_end" value="{{ form_date_end }}"
               class="block w-full text-sm border border-gray-300 rounded-md px-3 py-2 bg-white text-gray-700
                      focus:outline-none focus:ring-2 focus:ring-blue-500" />
             <p class="text-xs text-gray-400 mt-1">Filter on received_at</p>
@@ -199,12 +199,11 @@
         <span id="filter-label" class="text-xs text-gray-400"></span>
       </div>
       <div class="flex items-center gap-2">
-        <button id="download-leads-btn" disabled
-          class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-400
-                 border border-gray-200 rounded-md bg-gray-50 cursor-not-allowed"
-          title="Available in Phase 4">
+        <a href="/export/leads_outreach"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-700
+                 border border-gray-300 rounded-md bg-white hover:bg-gray-50 transition-colors shadow-sm">
           &#8595; Download
-        </button>
+        </a>
       </div>
     </div>
     <div class="overflow-x-auto">
@@ -280,8 +279,65 @@
     </div>
   </section>
 
-  <!-- ── 6. Exports (Phase 4) ──────────────────────────────────── -->
-  <!-- placeholder -->
+  <!-- ── 6. Exports ──────────────────────────────────────────── -->
+  <section class="bg-white rounded-lg border border-gray-200 shadow-sm">
+    <div class="px-6 py-4 border-b border-gray-100 flex items-center gap-3">
+      <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-semibold">6</span>
+      <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Exports</h2>
+      <span class="text-xs text-gray-400">Downloads reflect the current run</span>
+    </div>
+    <div class="px-6 py-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+      <!-- §8.1 Leads + Outreach flatfile -->
+      <a href="/export/leads_outreach"
+        class="flex flex-col gap-2 border border-gray-200 rounded-lg p-4 hover:border-blue-400 hover:shadow-md transition-all group">
+        <div class="flex items-center gap-2">
+          <span class="text-blue-600 text-lg">&#8595;</span>
+          <span class="text-sm font-semibold text-gray-700 group-hover:text-blue-700">Leads + Outreach</span>
+        </div>
+        <p class="text-xs text-gray-400 leading-relaxed">
+          One row per outreach attempt, enriched with lead fields, derived counters, and the <code class="bg-gray-100 px-1 rounded">error</code> flag column.
+        </p>
+      </a>
+
+      <!-- §8.2 Outreach with no matching leads -->
+      <a href="/export/nomatching"
+        class="flex flex-col gap-2 border border-gray-200 rounded-lg p-4 hover:border-blue-400 hover:shadow-md transition-all group">
+        <div class="flex items-center gap-2">
+          <span class="text-blue-600 text-lg">&#8595;</span>
+          <span class="text-sm font-semibold text-gray-700 group-hover:text-blue-700">Unmatched Outreach</span>
+        </div>
+        <p class="text-xs text-gray-400 leading-relaxed">
+          Outreach log rows whose <code class="bg-gray-100 px-1 rounded">lead_id</code> has no corresponding lead record (orphan attempts).
+        </p>
+      </a>
+
+      <!-- §8.3 Leads source -->
+      <a href="/export/leads_source"
+        class="flex flex-col gap-2 border border-gray-200 rounded-lg p-4 hover:border-blue-400 hover:shadow-md transition-all group">
+        <div class="flex items-center gap-2">
+          <span class="text-blue-600 text-lg">&#8595;</span>
+          <span class="text-sm font-semibold text-gray-700 group-hover:text-blue-700">Leads Source</span>
+        </div>
+        <p class="text-xs text-gray-400 leading-relaxed">
+          Raw leads file as uploaded, unfiltered and unmodified. Includes all rows regardless of date range.
+        </p>
+      </a>
+
+      <!-- §8.4 Outreach log source -->
+      <a href="/export/outreach_source"
+        class="flex flex-col gap-2 border border-gray-200 rounded-lg p-4 hover:border-blue-400 hover:shadow-md transition-all group">
+        <div class="flex items-center gap-2">
+          <span class="text-blue-600 text-lg">&#8595;</span>
+          <span class="text-sm font-semibold text-gray-700 group-hover:text-blue-700">Outreach Log Source</span>
+        </div>
+        <p class="text-xs text-gray-400 leading-relaxed">
+          Raw outreach log as uploaded, unfiltered and unmodified. Pass-through of the full source file.
+        </p>
+      </a>
+
+    </div>
+  </section>
 
   {% else %}
   <!-- Empty state -->

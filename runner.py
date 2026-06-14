@@ -79,7 +79,7 @@ def build_enriched(leads_df: pd.DataFrame, outreach_df: pd.DataFrame) -> pd.Data
     return enriched
 
 
-def _build_flag_columns(leads_df: pd.DataFrame, all_check_results: dict, check_modules: list) -> pd.DataFrame:
+def build_flag_columns(leads_df: pd.DataFrame, all_check_results: dict, check_modules: list) -> pd.DataFrame:
     """Build §3.4 aggregate flag columns — one row per lead."""
     category_map = {}
     for m in check_modules:
@@ -295,7 +295,7 @@ def run_pipeline(leads_path, outreach_path, out_dir, date_start=None, date_end=N
 
     # Step 3 (archive/diff) — Phase 5
     # Step 4: Build §3.4 aggregate flag columns
-    flag_df = _build_flag_columns(leads_df, all_check_results, check_modules)
+    flag_df = build_flag_columns(leads_df, all_check_results, check_modules)
 
     # Build table data for the UI
     leads_records = _build_leads_records(enriched_df, flag_df)
