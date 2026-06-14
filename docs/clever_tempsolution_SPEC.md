@@ -232,7 +232,13 @@ call_count, sms_count, pickup_count, status_pickup, lead_response_time, error
 ### 8.2 Outreach with no matching leads — `outreach_nomatchingleads.csv`
 All `outreach_log.csv` columns, for attempts whose `lead_id` does **not** exist in `leads.csv` (anti-join). Surfaces orphaned/mis-keyed outreach.
 
-Both exports honor the active date range. Export scope (full filtered range vs. current selection) — see §10.4 (open).
+8.1 and 8.2 honor the active date range. Export scope (full filtered range vs. current selection) — see §10.4 (open).
+
+### 8.3 Current leads source — `leads_[datetime].csv`
+Raw pass-through of the currently active leads input (§3.1 columns, unchanged), exactly as loaded — whichever of `data/leads.csv` (default) or the most recently uploaded file is currently in effect. **Not** date-filtered — lets the user retrieve/verify exactly what's currently loaded.
+
+### 8.4 Current outreach log source — `outreach_log_[datetime].csv`
+Same as 8.3, for the currently active outreach log input (§3.2 columns, unchanged). Not date-filtered.
 
 ---
 
@@ -309,11 +315,13 @@ Build in this order. Each phase should leave the app in a runnable, demoable sta
 - Reset button (§2.1).
 - **Done when:** clicking a card filters the table to the matching `lead_id`s; clicking a row populates the detail panel + outreach table; Reset clears working state and returns to the empty pre-Process view.
 
-**Phase 4 — Exports**
-- §8.1 `leads_outreach_[datetime].csv`, §8.2 `outreach_nomatchingleads.csv`.
-- **Done when:** both downloads produce correctly-shaped CSVs honoring the active date range.
+**Phase 4 — Exports + pre-deploy hardening**
+- §8.1 `leads_outreach_[datetime].csv`, §8.2 `outreach_nomatchingleads.csv`, §8.3 `leads_[datetime].csv`, §8.4 `outreach_log_[datetime].csv`.
+- Public deployment hardening, §9.5: Basic Auth (`before_request` hook), rate limiting on `/process` and `/reset`, `MAX_CONTENT_LENGTH` + `validate_csv_columns()` on upload. (The archive-retention item in §9.5 is deferred to Phase 5, since it has nothing to prune until archiving exists.)
+- **Done when:** all four exports download correctly-shaped CSVs (8.1/8.2 honoring the active date range, 8.3/8.4 as unfiltered pass-throughs); the app requires Basic Auth credentials; oversized or malformed CSV uploads are rejected with a clear error; rapid repeated clicks on Process/Reset are throttled.
 
 **Phase 5 — Audit / archive / headless (cut first if time-constrained)**
 - Per-check `archive/<run_timestamp>.csv` + `run_log.csv` (§4 step 3), diff-based new/resolved tracking, `on_new_flags` hook.
 - `run_checks.py` headless runner (§9.4).
-- **Done when:** running `run_checks.py` twice produces two archive entries per check with `new_count = 0`.
+- Archive retention from §9.5 (`ARCHIVE_RETENTION`, prune oldest entries).
+- **Done when:** running `run_checks.py` twice produces two archive entries per check with `new_count = 0`, and archive directories don't grow past the retention cap.
