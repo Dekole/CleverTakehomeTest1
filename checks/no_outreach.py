@@ -2,6 +2,7 @@ import pandas as pd
 
 CHECK_ID = "no_outreach"
 LABEL = "No contact — but reachable"
+FLAG_LABEL = "NO_CONTACT"
 SEVERITY = "error"
 CATEGORY = "nooutreach"
 ORDER = 1

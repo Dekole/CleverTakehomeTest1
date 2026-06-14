@@ -2,6 +2,7 @@ import pandas as pd
 
 CHECK_ID = "sla_breach"
 LABEL = "SLA breach"
+FLAG_LABEL = "SLA_BREACH"
 SEVERITY = "warn"
 CATEGORY = "sla"
 ORDER = 2

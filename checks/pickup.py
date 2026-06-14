@@ -2,6 +2,7 @@ import pandas as pd
 
 CHECK_ID = "has_pickup"
 LABEL = "Leads with phone pickup"
+FLAG_LABEL = "PICKUP"
 SEVERITY = "info"
 CATEGORY = "info"
 ORDER = 9

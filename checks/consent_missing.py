@@ -2,6 +2,7 @@ import pandas as pd
 
 CHECK_ID = "consent_missing"
 LABEL = "Consent missing / TCPA concern"
+FLAG_LABEL = "CONSENT_GAP"
 SEVERITY = "concern"
 CATEGORY = "legal"
 ORDER = 6

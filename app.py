@@ -1,9 +1,11 @@
 import base64
+import csv
+import hashlib
 import io
 import json
 import os
 import shutil
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pandas as pd
@@ -81,6 +83,59 @@ def _validate_csv(file_storage, required_cols, label):
         raise ValueError(f"{label}: missing columns — {', '.join(sorted(missing))}")
 
 
+# ── Visitor activity logging ───────────────────────────────────────────────────
+def _unique_visitor_count() -> int:
+    """Count distinct visitor_ids who have hit GET / — unique people who opened the app."""
+    log_path = OUT_DIR / "site_activity.csv"
+    if not log_path.exists():
+        return 0
+    try:
+        with open(log_path, newline="") as f:
+            reader = csv.DictReader(f)
+            return len({r["visitor_id"] for r in reader if r.get("path") == "/" and r.get("method") == "GET"})
+    except Exception:
+        return 0
+
+
+
+def _log_visit(username: str, status: int) -> None:
+    ip = request.headers.get("X-Forwarded-For", request.remote_addr or "")
+    ua = request.headers.get("User-Agent", "")
+    visitor_id = hashlib.sha1(f"{ip}{ua}".encode()).hexdigest()[:8]
+    row = {
+        "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC"),
+        "username": username,
+        "ip_address": ip,
+        "visitor_id": visitor_id,
+        "method": request.method,
+        "path": request.path,
+        "status": status,
+        "user_agent": ua,
+    }
+    log_path = OUT_DIR / "site_activity.csv"
+    write_header = not log_path.exists()
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    with open(log_path, "a", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=row.keys())
+        if write_header:
+            writer.writeheader()
+        writer.writerow(row)
+
+
+@app.after_request
+def log_request(response):
+    if response.status_code != 401:  # skip failed auth — don't log noise
+        username = "anonymous"
+        auth = request.headers.get("Authorization", "")
+        if auth.startswith("Basic "):
+            try:
+                username = base64.b64decode(auth[6:]).decode().split(":")[0]
+            except Exception:
+                pass
+        _log_visit(username, response.status_code)
+    return response
+
+
 # ── Pipeline state ─────────────────────────────────────────────────────────────
 def _save_state(date_start, date_end, leads_path, outreach_path):
     OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -152,7 +207,8 @@ def inject_form_values():
 # ── Routes ─────────────────────────────────────────────────────────────────────
 @app.route("/", methods=["GET"])
 def index():
-    return render_template("index.html", report=None, error=None)
+    return render_template("index.html", report=None, error=None,
+                           visitor_count=_unique_visitor_count())
 
 
 @app.route("/process", methods=["POST"])
@@ -191,9 +247,11 @@ def process():
             date_start=date_start,
             date_end=date_end,
         )
-        return render_template("index.html", report=report, error=None)
+        return render_template("index.html", report=report, error=None,
+                               visitor_count=_unique_visitor_count())
     except Exception as exc:
-        return render_template("index.html", report=None, error=str(exc))
+        return render_template("index.html", report=None, error=str(exc),
+                               visitor_count=_unique_visitor_count())
 
 
 @app.route("/reset", methods=["POST"])

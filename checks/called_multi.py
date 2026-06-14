@@ -2,7 +2,8 @@ import pandas as pd
 
 CHECK_ID = ["called_multi_0", "called_multi_1", "called_multi_2"]
 LABEL = ["Called >1x, 0 pickups", "Called >1x, 1 pickup", "Called >1x, 2 pickups"]
-SEVERITY = ["info", "info", "info"]
+FLAG_LABEL = ["MULTI_DIAL·0", "MULTI_DIAL·1", "MULTI_DIAL·2"]
+SEVERITY = ["info", "info", "concern"]
 CATEGORY = ["info", "info", "info"]
 ORDER = 10
 INPUT = "leads_outreach_enriched.csv"

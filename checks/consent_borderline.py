@@ -2,6 +2,7 @@ import pandas as pd
 
 CHECK_ID = "borderline"
 LABEL = "Borderline legal TCPA"
+FLAG_LABEL = "TCPA_BORDERLINE"
 SEVERITY = "warn"
 CATEGORY = "legal"
 ORDER = 5

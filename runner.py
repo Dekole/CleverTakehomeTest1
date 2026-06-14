@@ -31,6 +31,8 @@ OUTREACH_RENAME = {
     "agent_id": "o_agent_id",
 }
 
+ARCHIVE_RETENTION = int(os.environ.get("ARCHIVE_RETENTION", "50"))
+
 
 # ── Data building ──────────────────────────────────────────────────────────────
 
@@ -204,38 +206,118 @@ def _build_outreach_records(enriched_df: pd.DataFrame) -> list:
     return _serialize(outreach)
 
 
+# ── Archive / diff / trigger hook ──────────────────────────────────────────────
+
+def on_new_flags(check_id: str, new_lead_ids: list, out_dir: Path) -> None:
+    """Stub hook — logs newly-flagged leads to out/triggers.log."""
+    ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+    line = f"{ts}  check={check_id}  new_leads={','.join(str(x) for x in new_lead_ids)}\n"
+    with open(out_dir / "triggers.log", "a") as f:
+        f.write(line)
+
+
+def _archive_ts(run_at: str) -> str:
+    """Convert run_at string to a filesystem-safe timestamp. e.g. '2026-06-14_073802'"""
+    return run_at.replace(" UTC", "").replace(" ", "_").replace(":", "")
+
+
+def _diff_archive(archive_dir: Path, current_ids: set) -> tuple[set, set]:
+    """Return (new_ids, resolved_ids) by comparing current run to most recent archive entry."""
+    prev_files = sorted(archive_dir.glob("*.csv"))
+    if not prev_files:
+        return current_ids, set()
+    prev_df = pd.read_csv(prev_files[-1])
+    prev_ids = set(prev_df["lead_id"].unique()) if "lead_id" in prev_df.columns else set()
+    return current_ids - prev_ids, prev_ids - current_ids
+
+
+def _append_run_log(run_log_path: Path, row: dict) -> None:
+    write_header = not run_log_path.exists()
+    pd.DataFrame([row]).to_csv(run_log_path, mode="a", header=write_header, index=False)
+
+
+def _prune_archive(archive_dir: Path, retention: int) -> None:
+    files = sorted(archive_dir.glob("*.csv"))
+    for old in files[:-retention]:
+        old.unlink()
+
+
 # ── Check runner ───────────────────────────────────────────────────────────────
 
-def _run_check(check_module, enriched_df, config, total_leads, checks_out_dir, run_at):
+def _run_check(check_module, enriched_df, config, total_leads, total_outreach, checks_out_dir, run_at):
     """
     Run one check module. Returns (kpi_cards: list, results: dict {check_id: df}).
     Handles both single-CHECK_ID and list-CHECK_ID modules (e.g. called_multi).
+    Archives results, diffs against previous run, appends to run_log.csv.
+
+    Legal checks whose results have an attempt_id column are "attempt-based":
+    count = outreach rows flagged, pct = count / total_outreach.
+    All other checks are "lead-based": count = distinct lead_ids, pct = count / total_leads.
     """
+    out_dir = checks_out_dir.parent
+
     if isinstance(check_module.CHECK_ID, list):
         check_ids = check_module.CHECK_ID
         labels = check_module.LABEL
         severities = check_module.SEVERITY
+        categories = check_module.CATEGORY if isinstance(check_module.CATEGORY, list) else [check_module.CATEGORY] * len(check_ids)
     else:
         check_ids = [check_module.CHECK_ID]
         labels = [check_module.LABEL]
         severities = [check_module.SEVERITY]
+        categories = [check_module.CATEGORY]
 
     raw = check_module.run(enriched_df, config)
     check_outputs = raw if isinstance(raw, dict) else {check_ids[0]: raw}
 
     cards = []
     results = {}
-    for cid, label, severity in zip(check_ids, labels, severities):
+    ts = _archive_ts(run_at)
+
+    for cid, label, severity, category in zip(check_ids, labels, severities, categories):
         df = check_outputs.get(cid, pd.DataFrame())
         check_dir = checks_out_dir / cid
-        check_dir.mkdir(parents=True, exist_ok=True)
+        archive_dir = check_dir / "archive"
+        archive_dir.mkdir(parents=True, exist_ok=True)
 
+        # Attempt-based: legal checks whose output includes attempt_id (one row per outreach attempt)
+        is_attempt_based = (category == "legal") and ("attempt_id" in df.columns) and not df.empty
+        if is_attempt_based:
+            count = len(df)
+            pct = round(count / total_outreach * 100, 1) if total_outreach > 0 else 0.0
+            count_basis = "attempt"
+        else:
+            count = int(df["lead_id"].nunique()) if ("lead_id" in df.columns and not df.empty) else 0
+            pct = round(count / total_leads * 100, 1) if total_leads > 0 else 0.0
+            count_basis = "lead"
+
+        current_ids = set(df["lead_id"].unique()) if ("lead_id" in df.columns and not df.empty) else set()
+
+        # Diff before writing (so prev_files doesn't include this run)
+        new_ids, resolved_ids = _diff_archive(archive_dir, current_ids)
+
+        # Write archive + latest
         df_out = df.copy()
         df_out["run_at"] = run_at
+        df_out.to_csv(archive_dir / f"{ts}.csv", index=False)
         df_out.to_csv(check_dir / "latest.csv", index=False)
 
-        count = int(df["lead_id"].nunique()) if ("lead_id" in df.columns and len(df) > 0) else 0
-        pct = round(count / total_leads * 100, 1) if total_leads > 0 else 0.0
+        # Append run_log
+        _append_run_log(check_dir / "run_log.csv", {
+            "run_at": run_at,
+            "total_leads": total_leads,
+            "count_flagged": count,
+            "pct": pct,
+            "new_count": len(new_ids),
+            "resolved_count": len(resolved_ids),
+        })
+
+        # Prune archive
+        _prune_archive(archive_dir, ARCHIVE_RETENTION)
+
+        # Trigger hook
+        if new_ids:
+            on_new_flags(cid, list(new_ids), out_dir)
 
         cards.append({
             "check_id": cid,
@@ -243,7 +325,11 @@ def _run_check(check_module, enriched_df, config, total_leads, checks_out_dir, r
             "severity": severity,
             "count": count,
             "pct": pct,
+            "count_basis": count_basis,
+            "total_outreach": total_outreach,
             "run_at": run_at,
+            "new_count": len(new_ids),
+            "resolved_count": len(resolved_ids),
         })
         results[cid] = df
 
@@ -282,18 +368,19 @@ def run_pipeline(leads_path, outreach_path, out_dir, date_start=None, date_end=N
     enriched_df = build_enriched(leads_df, outreach_df)
     enriched_df.to_csv(out_dir / "leads_outreach_enriched.csv", index=False)
 
-    # Step 2: Run every check
+    total_outreach = int(enriched_df["o_attempt_id"].notna().sum())
+
+    # Step 2 + 3: Run every check (archive + diff inside _run_check)
     check_modules = load_checks()
     checks_out_dir = out_dir / "checks"
     kpi_cards = []
     all_check_results: dict = {}
 
     for check_module in check_modules:
-        cards, results = _run_check(check_module, enriched_df, config, total_leads, checks_out_dir, run_at)
+        cards, results = _run_check(check_module, enriched_df, config, total_leads, total_outreach, checks_out_dir, run_at)
         kpi_cards.extend(cards)
         all_check_results.update(results)
 
-    # Step 3 (archive/diff) — Phase 5
     # Step 4: Build §3.4 aggregate flag columns
     flag_df = build_flag_columns(leads_df, all_check_results, check_modules)
 
@@ -307,15 +394,22 @@ def run_pipeline(leads_path, outreach_path, out_dir, date_start=None, date_end=N
     }
     check_severities = {c["check_id"]: c["severity"] for c in kpi_cards}
 
+    check_flag_labels = {}
+    for m in check_modules:
+        ids = m.CHECK_ID if isinstance(m.CHECK_ID, list) else [m.CHECK_ID]
+        flags = m.FLAG_LABEL if isinstance(m.FLAG_LABEL, list) else [m.FLAG_LABEL]
+        for cid, fl in zip(ids, flags):
+            check_flag_labels[cid] = fl
+
     return {
         "total_leads": total_leads,
         "kpi_cards": kpi_cards,
         "date_start": date_start,
         "date_end": date_end,
         "run_at": run_at,
-        # Phase 3
         "leads_records": leads_records,
         "outreach_records": outreach_records,
         "check_lead_ids": check_lead_ids,
         "check_severities": check_severities,
+        "check_flag_labels": check_flag_labels,
     }

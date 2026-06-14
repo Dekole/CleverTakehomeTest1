@@ -2,6 +2,7 @@ import pandas as pd
 
 CHECK_ID = "no_contact_method"
 LABEL = "No contact — no method on file"
+FLAG_LABEL = "NO_METHOD"
 SEVERITY = "info"
 CATEGORY = "ops"
 ORDER = 3

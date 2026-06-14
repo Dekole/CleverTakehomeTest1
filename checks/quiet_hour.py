@@ -2,6 +2,7 @@ import pandas as pd
 
 CHECK_ID = "quiet_hour"
 LABEL = "TCPA quiet-hour violations"
+FLAG_LABEL = "TCPA_QUIET_HRS"
 SEVERITY = "error"
 CATEGORY = "legal"
 ORDER = 7

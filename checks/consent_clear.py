@@ -2,6 +2,7 @@ import pandas as pd
 
 CHECK_ID = "clear"
 LABEL = "Clear legal TCPA violations"
+FLAG_LABEL = "TCPA_SMS"
 SEVERITY = "error"
 CATEGORY = "legal"
 ORDER = 4

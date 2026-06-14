@@ -60,9 +60,19 @@
       </h1>
       <p class="text-xs text-gray-400 mt-0.5">Sales Operations · Compliance Triage &amp; Data Export</p>
     </div>
-    {% if report %}
-    <span class="text-xs text-gray-400">Last run: {{ report.run_at }}</span>
-    {% endif %}
+    <div class="text-right flex items-center gap-6">
+      <div class="text-right">
+        <p class="text-xs text-gray-500 font-medium">Prepared by Peter Chen &mdash; June 14, 2026</p>
+        <p class="text-xs text-gray-400">PM Interview Submission · Clever Real Estate</p>
+        {% if report %}
+        <p class="text-xs text-gray-400 mt-0.5">Last run: {{ report.run_at }}</p>
+        {% endif %}
+      </div>
+      <div class="border border-gray-200 rounded-lg px-4 py-2 text-center bg-gray-50 min-w-[80px]">
+        <div class="text-2xl font-bold text-gray-800">{{ visitor_count }}</div>
+        <div class="text-xs text-gray-400 whitespace-nowrap">unique visitors</div>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -182,7 +192,10 @@
             <span class="kpi-num text-3xl font-bold">{{ card.count }}</span>
             <span class="text-sm text-gray-400">{{ card.pct }}%</span>
           </div>
-          <div class="text-xs text-gray-400 mt-1">as of {{ card.run_at }}</div>
+          {% if card.count_basis == "attempt" %}
+          <div class="text-xs text-gray-400 mt-1">reachouts &middot; of {{ card.total_outreach }} total</div>
+          {% endif %}
+          <div class="text-xs text-gray-400 mt-0.5">as of {{ card.run_at }}</div>
         </div>
         {% endfor %}
 
@@ -210,10 +223,7 @@
       <table class="w-full text-sm border-collapse">
         <thead>
           <tr class="bg-gray-50 border-b border-gray-200">
-            <th class="px-4 py-3 text-left w-10">
-              <input type="checkbox" id="select-all-cb"
-                class="h-4 w-4 rounded border-gray-300 text-blue-600 cursor-pointer" />
-            </th>
+            <th class="px-4 py-3 text-left w-10"></th>
             <th data-col="lead_id"    class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Lead ID <span class="sort-icon">↕</span></th>
             <th data-col="source"     class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Source <span class="sort-icon">↕</span></th>
             <th data-col="received_at" class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Received <span class="sort-icon active">↓</span></th>
@@ -354,11 +364,12 @@
 <script>
 (function () {
   // ── Embedded data ────────────────────────────────────────────
-  const leadsData     = {{ report.leads_records  | tojson }};
-  const outreachData  = {{ report.outreach_records | tojson }};
-  const checkLeadIds  = {{ report.check_lead_ids  | tojson }};
-  const checkSev      = {{ report.check_severities | tojson }};
-  const totalLeads    = {{ report.total_leads }};
+  const leadsData       = {{ report.leads_records    | tojson }};
+  const outreachData    = {{ report.outreach_records  | tojson }};
+  const checkLeadIds    = {{ report.check_lead_ids    | tojson }};
+  const checkSev        = {{ report.check_severities  | tojson }};
+  const checkFlagLabels = {{ report.check_flag_labels | tojson }};
+  const totalLeads      = {{ report.total_leads }};
 
   // ── State ────────────────────────────────────────────────────
   let activeCheckId  = null;   // null = Total (all leads)
@@ -371,7 +382,7 @@
   const filterLabel      = document.getElementById('filter-label');
   const leadsTbody       = document.getElementById('leads-tbody');
   const leadsEmpty       = document.getElementById('leads-empty');
-  const selectAllCb      = document.getElementById('select-all-cb');
+
   const detailEmpty      = document.getElementById('detail-empty');
   const detailContent    = document.getElementById('detail-content');
   const detailLeadId     = document.getElementById('detail-lead-id');
@@ -413,12 +424,14 @@
     return `<span class="chip-${esc(sev)} inline-block text-xs px-1.5 py-0.5 rounded border mr-1 mb-0.5 whitespace-nowrap">${esc(tag)}</span>`;
   }
 
+  function flagLabel(checkId) { return checkFlagLabels[checkId] || checkId; }
+
   function flagChips(lead) {
     const chips = [];
-    if (lead.err_nooutreach) chips.push(chipHtml('no-outreach', 'error'));
-    if (lead.err_SLA)        chips.push(chipHtml('SLA', 'warn'));
-    if (lead.err_legal)   lead.err_legal.split('|').forEach(t => t && chips.push(chipHtml(t, checkSev[t] || 'info')));
-    if (lead.err_others)  lead.err_others.split('|').forEach(t => t && chips.push(chipHtml(t, checkSev[t] || 'info')));
+    if (lead.err_nooutreach) chips.push(chipHtml(flagLabel('no_outreach'), 'error'));
+    if (lead.err_SLA)        chips.push(chipHtml(flagLabel('sla_breach'), 'warn'));
+    if (lead.err_legal)   lead.err_legal.split('|').forEach(t => t && chips.push(chipHtml(flagLabel(t), checkSev[t] || 'info')));
+    if (lead.err_others)  lead.err_others.split('|').forEach(t => t && chips.push(chipHtml(flagLabel(t), checkSev[t] || 'info')));
     return chips.length ? chips.join('') : '<span class="text-gray-300 text-xs">—</span>';
   }
 
@@ -524,9 +537,6 @@
       });
     });
 
-    // Select-all checkbox
-    selectAllCb.indeterminate = false;
-    selectAllCb.checked = false;
   }
 
   // ── Render: detail panel ─────────────────────────────────────
@@ -555,7 +565,7 @@
 
     const consentVal = `SMS: ${lead.consent_sms === true ? 'TRUE' : lead.consent_sms === false ? 'FALSE' : '—'} / Call: ${lead.consent_call === true ? 'TRUE' : lead.consent_call === false ? 'FALSE' : '—'}`;
     const respTime = lead.lead_response_time !== null ? fmtRespTime(lead.lead_response_time) : '—';
-    const errorTags = lead.error ? lead.error.split('|').map(t => chipHtml(t, checkSev[t] || (t==='no-outreach'?'error':t==='SLA'?'warn':'info'))).join('') : '<span class="text-gray-400 text-xs">None</span>';
+    const errorTags = lead.error ? lead.error.split('|').map(t => chipHtml(flagLabel(t), checkSev[t] || 'info')).join('') : '<span class="text-gray-400 text-xs">None</span>';
 
     detailGrid.innerHTML = [
       field('lead_id',            lead.lead_id),
