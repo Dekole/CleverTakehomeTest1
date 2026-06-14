@@ -1,4 +1,7 @@
-out/
+memory/
+out/working/
+out/leads_outreach_enriched.csv
+out/checks/
 __pycache__/
 *.pyc
 .env

@@ -1,0 +1,9 @@
+out/
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+.git/
+docs/
+memory/

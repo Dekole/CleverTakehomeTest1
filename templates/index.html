@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lead Compliance &amp; Outreach Reconciliation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Severity palette for KPI cards */
+    .sev-error   { background-color: #f4dcdc; border-color: #c07070; }
+    .sev-error   .kpi-num  { color: #8c2b2b; }
+    .sev-error   .sev-badge { color: #8c2b2b; border-color: #c07070; }
+    .sev-warn    { background-color: #f6e6cd; border-color: #cfa168; }
+    .sev-warn    .kpi-num  { color: #8a5a1c; }
+    .sev-warn    .sev-badge { color: #8a5a1c; border-color: #cfa168; }
+    .sev-concern { background-color: #f3efcf; border-color: #c3b86a; }
+    .sev-concern .kpi-num  { color: #6f6411; }
+    .sev-concern .sev-badge { color: #6f6411; border-color: #c3b86a; }
+    .sev-info    { background-color: #f9fafb; border-color: #d1d5db; }
+    .sev-info    .kpi-num  { color: #111827; }
+    .sev-info    .sev-badge { color: #6b7280; border-color: #d1d5db; }
+
+    /* Active KPI card */
+    .kpi-card { transition: outline 0.1s; }
+    .kpi-card.active { outline: 2px solid #2563eb; outline-offset: 2px; }
+
+    /* Flag chips */
+    .chip-error   { background: #f4dcdc; color: #8c2b2b; border-color: #c07070; }
+    .chip-warn    { background: #f6e6cd; color: #8a5a1c; border-color: #cfa168; }
+    .chip-concern { background: #f3efcf; color: #6f6411; border-color: #c3b86a; }
+    .chip-info    { background: #e9ebee; color: #3c434a; border-color: #aab2ba; }
+
+    /* Row tints */
+    .row-error   { background-color: #fef9f9; }
+    .row-warn    { background-color: #fefcf7; }
+    .row-concern { background-color: #fdfdf2; }
+    tr.selected  { background-color: #eff6ff !important; }
+
+    /* Sortable header */
+    th[data-col] { cursor: pointer; user-select: none; white-space: nowrap; }
+    th[data-col]:hover { background-color: #f1f5f9; }
+    .sort-icon { color: #94a3b8; margin-left: 4px; font-size: 11px; }
+    .sort-icon.active { color: #2563eb; }
+
+    /* Status chips in outreach table */
+    .status-ok      { background: #dcfce7; color: #166534; border-color: #86efac; }
+    .status-neutral { background: #fef9c3; color: #854d0e; border-color: #fde047; }
+    .status-err     { background: #fee2e2; color: #991b1b; border-color: #fca5a5; }
+    .status-default { background: #f1f5f9; color: #475569; border-color: #cbd5e1; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased">
+
+<!-- ── Header ─────────────────────────────────────────────────── -->
+<header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div>
+      <h1 class="text-lg font-semibold text-gray-900 leading-tight">
+        Lead Compliance &amp; Outreach Reconciliation
+      </h1>
+      <p class="text-xs text-gray-400 mt-0.5">Sales Operations · Compliance Triage &amp; Data Export</p>
+    </div>
+    {% if report %}
+    <span class="text-xs text-gray-400">Last run: {{ report.run_at }}</span>
+    {% endif %}
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-6 py-8 space-y-6">
+
+  <!-- ── Error banner ──────────────────────────────────────────── -->
+  {% if error %}
+  <div class="bg-red-50 border border-red-300 text-red-700 rounded-lg px-5 py-4 text-sm">
+    <strong>Pipeline error:</strong> {{ error }}
+  </div>
+  {% endif %}
+
+  <!-- ── 1. Inputs ─────────────────────────────────────────────── -->
+  <section class="bg-white rounded-lg border border-gray-200 shadow-sm">
+    <div class="px-6 py-4 border-b border-gray-100 flex items-center gap-3">
+      <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-semibold">1</span>
+      <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Inputs</h2>
+    </div>
+    <div class="px-6 py-5">
+      <form id="process-form" method="POST" action="/process" enctype="multipart/form-data">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1.5">Leads file</label>
+            <input type="file" name="leads_file" accept=".csv"
+              class="block w-full text-sm text-gray-600 border border-gray-300 rounded-md px-3 py-2 bg-white
+                     focus:outline-none focus:ring-2 focus:ring-blue-500
+                     file:mr-3 file:py-1 file:px-2 file:rounded file:border-0
+                     file:text-xs file:bg-gray-100 file:text-gray-600 file:cursor-pointer" />
+            <p class="text-xs text-gray-400 mt-1">Default: leads.csv</p>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1.5">Outreach log</label>
+            <input type="file" name="outreach_file" accept=".csv"
+              class="block w-full text-sm text-gray-600 border border-gray-300 rounded-md px-3 py-2 bg-white
+                     focus:outline-none focus:ring-2 focus:ring-blue-500
+                     file:mr-3 file:py-1 file:px-2 file:rounded file:border-0
+                     file:text-xs file:bg-gray-100 file:text-gray-600 file:cursor-pointer" />
+            <p class="text-xs text-gray-400 mt-1">Default: outreach_log.csv</p>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1.5">Date start</label>
+            <input type="date" name="date_start" value="{{ request.form.get('date_start', '') }}"
+              class="block w-full text-sm border border-gray-300 rounded-md px-3 py-2 bg-white text-gray-700
+                     focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <p class="text-xs text-gray-400 mt-1">Filter on received_at</p>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1.5">Date end</label>
+            <input type="date" name="date_end" value="{{ request.form.get('date_end', '') }}"
+              class="block w-full text-sm border border-gray-300 rounded-md px-3 py-2 bg-white text-gray-700
+                     focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <p class="text-xs text-gray-400 mt-1">Filter on received_at</p>
+          </div>
+        </div>
+      </form>
+      <div class="flex items-center gap-3 mt-5">
+        <button type="submit" form="process-form"
+          class="inline-flex items-center gap-2 px-5 py-2 bg-blue-600 text-white text-sm font-medium
+                 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500
+                 shadow-sm transition-colors cursor-pointer">
+          &#9654; Process
+        </button>
+        <form method="POST" action="/reset" class="inline">
+          <button type="submit"
+            class="inline-flex items-center gap-2 px-4 py-2 bg-white text-gray-600 text-sm font-medium
+                   rounded-md border border-gray-300 hover:bg-gray-50 focus:outline-none
+                   focus:ring-2 focus:ring-gray-400 shadow-sm transition-colors cursor-pointer">
+            &#8635; Reset
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  {% if report %}
+
+  <!-- ── 2. Summary cards ──────────────────────────────────────── -->
+  <section class="bg-white rounded-lg border border-gray-200 shadow-sm">
+    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between flex-wrap gap-3">
+      <div class="flex items-center gap-3">
+        <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-semibold">2</span>
+        <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Summary</h2>
+      </div>
+      <div class="flex items-center gap-4 text-xs text-gray-400 flex-wrap">
+        {% if report.date_start or report.date_end %}
+        <span>Filtered: {{ report.date_start or '—' }} → {{ report.date_end or '—' }}</span>
+        {% endif %}
+        <div class="flex items-center gap-3">
+          <span class="flex items-center gap-1.5"><span class="inline-block w-2.5 h-2.5 rounded-full bg-[#c07070]"></span>error</span>
+          <span class="flex items-center gap-1.5"><span class="inline-block w-2.5 h-2.5 rounded-full bg-[#cfa168]"></span>warn</span>
+          <span class="flex items-center gap-1.5"><span class="inline-block w-2.5 h-2.5 rounded-full bg-[#c3b86a]"></span>concern</span>
+          <span class="flex items-center gap-1.5"><span class="inline-block w-2.5 h-2.5 rounded-full bg-[#aab2ba]"></span>info</span>
+        </div>
+      </div>
+    </div>
+    <div class="p-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+        <!-- Total leads — spans 2 cols, active by default -->
+        <div id="total-card"
+          class="kpi-card sev-info active col-span-2 border rounded-lg p-5 flex items-center gap-6 cursor-pointer hover:shadow-md transition-shadow">
+          <div class="flex-1 text-sm text-gray-500 font-medium">Total leads in range</div>
+          <div class="flex items-baseline gap-3">
+            <span class="kpi-num text-5xl font-bold">{{ report.total_leads }}</span>
+            <span class="text-sm text-gray-400">100%</span>
+          </div>
+        </div>
+
+        {% for card in report.kpi_cards %}
+        <div class="kpi-card sev-{{ card.severity }} border rounded-lg p-4 relative cursor-pointer hover:shadow-md transition-shadow"
+             data-check-id="{{ card.check_id }}">
+          <span class="sev-badge absolute top-3 right-3 text-xs font-semibold border rounded px-1.5 py-0.5">
+            {{ card.severity }}
+          </span>
+          <div class="text-sm text-gray-600 font-medium leading-snug pr-12 min-h-[36px]">{{ card.label }}</div>
+          <div class="mt-3 flex items-baseline gap-2">
+            <span class="kpi-num text-3xl font-bold">{{ card.count }}</span>
+            <span class="text-sm text-gray-400">{{ card.pct }}%</span>
+          </div>
+          <div class="text-xs text-gray-400 mt-1">as of {{ card.run_at }}</div>
+        </div>
+        {% endfor %}
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 3. Leads table ────────────────────────────────────────── -->
+  <section class="bg-white rounded-lg border border-gray-200 shadow-sm">
+    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between flex-wrap gap-3">
+      <div class="flex items-center gap-3">
+        <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-semibold">3</span>
+        <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Leads</h2>
+        <span id="filter-label" class="text-xs text-gray-400"></span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="download-leads-btn" disabled
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-400
+                 border border-gray-200 rounded-md bg-gray-50 cursor-not-allowed"
+          title="Available in Phase 4">
+          &#8595; Download
+        </button>
+      </div>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm border-collapse">
+        <thead>
+          <tr class="bg-gray-50 border-b border-gray-200">
+            <th class="px-4 py-3 text-left w-10">
+              <input type="checkbox" id="select-all-cb"
+                class="h-4 w-4 rounded border-gray-300 text-blue-600 cursor-pointer" />
+            </th>
+            <th data-col="lead_id"    class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Lead ID <span class="sort-icon">↕</span></th>
+            <th data-col="source"     class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Source <span class="sort-icon">↕</span></th>
+            <th data-col="received_at" class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Received <span class="sort-icon active">↓</span></th>
+            <th data-col="name"       class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Name <span class="sort-icon">↕</span></th>
+            <th data-col="phone"      class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Phone <span class="sort-icon">↕</span></th>
+            <th data-col="lead_response_time" class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Resp. time <span class="sort-icon">↕</span></th>
+            <th data-col="status_pickup"      class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Pickup <span class="sort-icon">↕</span></th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Flags</th>
+          </tr>
+        </thead>
+        <tbody id="leads-tbody">
+          <!-- populated by JS -->
+        </tbody>
+      </table>
+      <div id="leads-empty" class="hidden px-6 py-10 text-center text-sm text-gray-400">
+        No leads match the active filter.
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 4. Lead detail ────────────────────────────────────────── -->
+  <section id="detail-section" class="bg-white rounded-lg border border-gray-200 shadow-sm">
+    <div class="px-6 py-4 border-b border-gray-100 flex items-center gap-3">
+      <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-semibold">4</span>
+      <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Lead detail</h2>
+      <span id="detail-lead-id" class="text-xs font-mono text-gray-400"></span>
+    </div>
+    <div id="detail-empty" class="px-6 py-10 text-center text-sm text-gray-400">
+      Select a lead above to view details.
+    </div>
+    <div id="detail-content" class="hidden px-6 py-5">
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-4" id="detail-grid">
+        <!-- populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 5. Outreach table ─────────────────────────────────────── -->
+  <section id="outreach-section" class="bg-white rounded-lg border border-gray-200 shadow-sm">
+    <div class="px-6 py-4 border-b border-gray-100 flex items-center gap-3">
+      <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-semibold">5</span>
+      <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Outreach attempts</h2>
+      <span id="outreach-label" class="text-xs text-gray-400"></span>
+    </div>
+    <div id="outreach-empty" class="px-6 py-10 text-center text-sm text-gray-400">
+      Select a lead above to view outreach attempts.
+    </div>
+    <div id="outreach-table-wrap" class="hidden overflow-x-auto">
+      <table class="w-full text-sm border-collapse">
+        <thead>
+          <tr class="bg-gray-50 border-b border-gray-200">
+            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Attempt ID</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Channel</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Attempted at</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Status</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Agent</th>
+          </tr>
+        </thead>
+        <tbody id="outreach-tbody">
+          <!-- populated by JS -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── 6. Exports (Phase 4) ──────────────────────────────────── -->
+  <!-- placeholder -->
+
+  {% else %}
+  <!-- Empty state -->
+  <div class="text-center py-20 text-gray-400">
+    <div class="text-5xl mb-4">&#9654;</div>
+    <p class="text-base font-medium text-gray-500">Select your files and click <strong>Process</strong> to generate the report.</p>
+    <p class="text-sm mt-1">Default bundled CSVs will be used if no files are uploaded.</p>
+  </div>
+  {% endif %}
+
+</main>
+
+{% if report %}
+<script>
+(function () {
+  // ── Embedded data ────────────────────────────────────────────
+  const leadsData     = {{ report.leads_records  | tojson }};
+  const outreachData  = {{ report.outreach_records | tojson }};
+  const checkLeadIds  = {{ report.check_lead_ids  | tojson }};
+  const checkSev      = {{ report.check_severities | tojson }};
+  const totalLeads    = {{ report.total_leads }};
+
+  // ── State ────────────────────────────────────────────────────
+  let activeCheckId  = null;   // null = Total (all leads)
+  let selectedLeadId = null;
+  let sortCol        = 'received_at';
+  let sortDir        = -1;     // -1 = desc, 1 = asc
+
+  // ── DOM refs ─────────────────────────────────────────────────
+  const totalCard        = document.getElementById('total-card');
+  const filterLabel      = document.getElementById('filter-label');
+  const leadsTbody       = document.getElementById('leads-tbody');
+  const leadsEmpty       = document.getElementById('leads-empty');
+  const selectAllCb      = document.getElementById('select-all-cb');
+  const detailEmpty      = document.getElementById('detail-empty');
+  const detailContent    = document.getElementById('detail-content');
+  const detailLeadId     = document.getElementById('detail-lead-id');
+  const detailGrid       = document.getElementById('detail-grid');
+  const outreachEmpty    = document.getElementById('outreach-empty');
+  const outreachWrap     = document.getElementById('outreach-table-wrap');
+  const outreachTbody    = document.getElementById('outreach-tbody');
+  const outreachLabel    = document.getElementById('outreach-label');
+
+  // ── Helpers ──────────────────────────────────────────────────
+  function esc(s) {
+    if (s === null || s === undefined) return '';
+    return String(s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function fmtDate(s) {
+    if (!s) return '—';
+    const d = new Date(s);
+    if (isNaN(d)) return esc(s);
+    const mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
+    const yr = String(d.getFullYear()).slice(-2);
+    const hh = String(d.getHours()).padStart(2,'0');
+    const mm = String(d.getMinutes()).padStart(2,'0');
+    return `${mo} ${d.getDate()} '${yr} ${hh}:${mm}`;
+  }
+
+  function fmtRespTime(mins) {
+    if (mins === null || mins === undefined) return '—';
+    if (mins < 1) return '<1m';
+    if (mins < 60) return Math.round(mins) + 'm';
+    const h = Math.floor(mins / 60);
+    const m = Math.round(mins % 60);
+    return m > 0 ? `${h}h ${m}m` : `${h}h`;
+  }
+
+  function chipHtml(tag, sev) {
+    return `<span class="chip-${esc(sev)} inline-block text-xs px-1.5 py-0.5 rounded border mr-1 mb-0.5 whitespace-nowrap">${esc(tag)}</span>`;
+  }
+
+  function flagChips(lead) {
+    const chips = [];
+    if (lead.err_nooutreach) chips.push(chipHtml('no-outreach', 'error'));
+    if (lead.err_SLA)        chips.push(chipHtml('SLA', 'warn'));
+    if (lead.err_legal)   lead.err_legal.split('|').forEach(t => t && chips.push(chipHtml(t, checkSev[t] || 'info')));
+    if (lead.err_others)  lead.err_others.split('|').forEach(t => t && chips.push(chipHtml(t, checkSev[t] || 'info')));
+    return chips.length ? chips.join('') : '<span class="text-gray-300 text-xs">—</span>';
+  }
+
+  function rowSeverity(lead) {
+    const order = {error:4, warn:3, concern:2, info:1};
+    let best = 0, bestSev = null;
+    const tags = [];
+    if (lead.err_nooutreach) tags.push('error');
+    if (lead.err_SLA)        tags.push('warn');
+    if (lead.err_legal)  lead.err_legal.split('|').forEach(t => t && tags.push(checkSev[t] || 'info'));
+    if (lead.err_others) lead.err_others.split('|').forEach(t => t && tags.push(checkSev[t] || 'info'));
+    tags.forEach(s => { if ((order[s]||0) > best) { best = order[s]; bestSev = s; } });
+    return bestSev;
+  }
+
+  function statusChipClass(status) {
+    if (!status) return 'status-default';
+    if (['completed','delivered'].includes(status)) return 'status-ok';
+    if (['no_answer','voicemail'].includes(status)) return 'status-neutral';
+    if (status.startsWith('failed_')) return 'status-err';
+    return 'status-default';
+  }
+
+  // ── Filtering & sorting ──────────────────────────────────────
+  function getFilteredLeads() {
+    if (!activeCheckId) return leadsData;
+    const ids = new Set(checkLeadIds[activeCheckId] || []);
+    return leadsData.filter(l => ids.has(l.lead_id));
+  }
+
+  function sortValue(lead, col) {
+    if (col === 'name') return ((lead.first_name || '') + ' ' + (lead.last_name || '')).trim().toLowerCase();
+    if (col === 'status_pickup') return lead.status_pickup ? 1 : 0;
+    const v = lead[col];
+    return v === null || v === undefined ? '' : v;
+  }
+
+  function getSortedLeads(leads) {
+    return [...leads].sort((a, b) => {
+      const va = sortValue(a, sortCol);
+      const vb = sortValue(b, sortCol);
+      if (va < vb) return -1 * sortDir;
+      if (va > vb) return  1 * sortDir;
+      return 0;
+    });
+  }
+
+  // ── Render: leads table ──────────────────────────────────────
+  function renderLeadsTable() {
+    const filtered = getFilteredLeads();
+    const sorted   = getSortedLeads(filtered);
+
+    // Filter label
+    if (activeCheckId) {
+      const card = document.querySelector(`.kpi-card[data-check-id="${activeCheckId}"]`);
+      const label = card ? card.querySelector('.text-sm.text-gray-600')?.textContent?.trim() : activeCheckId;
+      filterLabel.textContent = `— filtered by "${label}" · ${filtered.length} lead${filtered.length !== 1 ? 's' : ''}`;
+    } else {
+      filterLabel.textContent = `— ${totalLeads} leads`;
+    }
+
+    if (!sorted.length) {
+      leadsTbody.innerHTML = '';
+      leadsEmpty.classList.remove('hidden');
+      return;
+    }
+    leadsEmpty.classList.add('hidden');
+
+    leadsTbody.innerHTML = sorted.map(lead => {
+      const sev   = rowSeverity(lead);
+      const rowCls = lead.lead_id === selectedLeadId ? 'selected' : (sev ? `row-${sev}` : '');
+      const name  = [lead.first_name, lead.last_name].filter(Boolean).join(' ') || '—';
+      return `
+      <tr class="${rowCls} border-b border-gray-100 cursor-pointer hover:bg-blue-50 transition-colors"
+          data-lead-id="${esc(lead.lead_id)}">
+        <td class="px-4 py-2.5 text-center">
+          <input type="checkbox" class="row-checkbox h-4 w-4 rounded border-gray-300 text-blue-600 cursor-pointer"
+                 ${lead.lead_id === selectedLeadId ? 'checked' : ''} />
+        </td>
+        <td class="px-4 py-2.5 font-mono text-xs text-blue-700 font-medium">${esc(lead.lead_id)}</td>
+        <td class="px-4 py-2.5 text-sm">${esc(lead.source || '—')}</td>
+        <td class="px-4 py-2.5 text-sm text-gray-600 whitespace-nowrap">${fmtDate(lead.received_at)}</td>
+        <td class="px-4 py-2.5 text-sm">${esc(name)}</td>
+        <td class="px-4 py-2.5 font-mono text-xs text-gray-600">${esc(lead.phone || '—')}</td>
+        <td class="px-4 py-2.5 text-sm text-gray-600 whitespace-nowrap">${fmtRespTime(lead.lead_response_time)}</td>
+        <td class="px-4 py-2.5 text-sm">
+          ${lead.status_pickup
+            ? '<span class="text-green-700 font-medium">Yes</span>'
+            : '<span class="text-gray-400">No</span>'}
+        </td>
+        <td class="px-4 py-2.5">${flagChips(lead)}</td>
+      </tr>`;
+    }).join('');
+
+    // Row click handlers
+    leadsTbody.querySelectorAll('tr').forEach(tr => {
+      tr.addEventListener('click', e => {
+        if (e.target.type === 'checkbox') return; // handled separately
+        selectLead(tr.dataset.leadId);
+      });
+      tr.querySelector('.row-checkbox').addEventListener('change', () => {
+        selectLead(tr.dataset.leadId);
+      });
+    });
+
+    // Select-all checkbox
+    selectAllCb.indeterminate = false;
+    selectAllCb.checked = false;
+  }
+
+  // ── Render: detail panel ─────────────────────────────────────
+  function renderDetailPanel(lead) {
+    if (!lead) {
+      detailEmpty.classList.remove('hidden');
+      detailContent.classList.add('hidden');
+      detailLeadId.textContent = '';
+      return;
+    }
+    detailEmpty.classList.add('hidden');
+    detailContent.classList.remove('hidden');
+    detailLeadId.textContent = lead.lead_id;
+
+    const field = (label, value, highlight) => {
+      const valHtml = (value === null || value === undefined || value === '')
+        ? '<span class="text-gray-400">—</span>'
+        : `<span class="${highlight ? 'font-medium' : ''}">${esc(String(value))}</span>`;
+      const bg = highlight ? 'bg-amber-50 border border-amber-200 rounded px-2 py-1' : '';
+      return `
+      <div>
+        <div class="text-xs text-gray-400 mb-0.5">${esc(label)}</div>
+        <div class="text-sm ${bg}">${valHtml}</div>
+      </div>`;
+    };
+
+    const consentVal = `SMS: ${lead.consent_sms === true ? 'TRUE' : lead.consent_sms === false ? 'FALSE' : '—'} / Call: ${lead.consent_call === true ? 'TRUE' : lead.consent_call === false ? 'FALSE' : '—'}`;
+    const respTime = lead.lead_response_time !== null ? fmtRespTime(lead.lead_response_time) : '—';
+    const errorTags = lead.error ? lead.error.split('|').map(t => chipHtml(t, checkSev[t] || (t==='no-outreach'?'error':t==='SLA'?'warn':'info'))).join('') : '<span class="text-gray-400 text-xs">None</span>';
+
+    detailGrid.innerHTML = [
+      field('lead_id',            lead.lead_id),
+      field('name',               [lead.first_name, lead.last_name].filter(Boolean).join(' ') || '—'),
+      field('source',             lead.source),
+      field('phone',              lead.phone),
+      field('email',              lead.email),
+      field('consent (sms/call)', consentVal),
+      field('received_at',        fmtDate(lead.received_at)),
+      field('lead_type',          lead.lead_type),
+      field('status',             lead.lead_status),
+      field('property_zip',       lead.property_zip),
+      field('response time',      respTime),
+      field('calls / pickups',    `${lead.call_count || 0} calls, ${lead.pickup_count || 0} pickups`),
+      // Flag fields — highlighted
+      `<div class="col-span-2 md:col-span-3 mt-2 pt-3 border-t border-gray-100">
+         <div class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Why this lead is flagged</div>
+         <div>${errorTags}</div>
+       </div>`,
+    ].join('');
+  }
+
+  // ── Render: outreach table ───────────────────────────────────
+  function renderOutreachTable(leadId) {
+    const rows = leadId ? outreachData.filter(r => r.lead_id === leadId) : [];
+    outreachLabel.textContent = leadId ? `· ${rows.length} attempt${rows.length !== 1 ? 's' : ''} for ${leadId}` : '';
+
+    if (!rows.length) {
+      outreachEmpty.classList.remove('hidden');
+      outreachWrap.classList.add('hidden');
+      if (leadId) outreachEmpty.textContent = `No outreach attempts found for ${leadId}.`;
+      else        outreachEmpty.textContent = 'Select a lead above to view outreach attempts.';
+      return;
+    }
+    outreachEmpty.classList.add('hidden');
+    outreachWrap.classList.remove('hidden');
+
+    outreachTbody.innerHTML = rows.map(r => `
+    <tr class="border-b border-gray-100 hover:bg-gray-50">
+      <td class="px-4 py-2.5 font-mono text-xs text-gray-500">${esc(r.attempt_id || '—')}</td>
+      <td class="px-4 py-2.5 text-sm">
+        <span class="inline-flex items-center gap-1">
+          ${r.channel === 'call'
+            ? '<span class="text-blue-600">&#9742;</span>'
+            : '<span class="text-purple-600">&#9993;</span>'}
+          ${esc(r.channel || '—')}
+        </span>
+      </td>
+      <td class="px-4 py-2.5 text-sm text-gray-600 whitespace-nowrap">${fmtDate(r.attempted_at)}</td>
+      <td class="px-4 py-2.5">
+        <span class="${statusChipClass(r.status)} inline-block text-xs px-2 py-0.5 rounded border">${esc(r.status || '—')}</span>
+      </td>
+      <td class="px-4 py-2.5 font-mono text-xs text-gray-500">${esc(r.agent_id || '—')}</td>
+    </tr>`).join('');
+  }
+
+  // ── Lead selection ───────────────────────────────────────────
+  function selectLead(leadId) {
+    selectedLeadId = (selectedLeadId === leadId) ? null : leadId;
+    const lead = selectedLeadId ? leadsData.find(l => l.lead_id === selectedLeadId) : null;
+    renderLeadsTable();
+    renderDetailPanel(lead);
+    renderOutreachTable(selectedLeadId);
+    if (lead) {
+      document.getElementById('detail-section').scrollIntoView({behavior: 'smooth', block: 'nearest'});
+    }
+  }
+
+  // ── KPI card click-to-filter ─────────────────────────────────
+  function setActiveCard(checkId) {
+    // Update visual state
+    document.querySelectorAll('.kpi-card').forEach(c => c.classList.remove('active'));
+    if (checkId === null) {
+      totalCard.classList.add('active');
+    } else {
+      const card = document.querySelector(`.kpi-card[data-check-id="${checkId}"]`);
+      if (card) card.classList.add('active');
+    }
+    activeCheckId = checkId;
+    selectedLeadId = null;
+    renderLeadsTable();
+    renderDetailPanel(null);
+    renderOutreachTable(null);
+  }
+
+  totalCard.addEventListener('click', () => {
+    if (activeCheckId === null) return; // already active — no-op
+    setActiveCard(null);
+  });
+
+  document.querySelectorAll('.kpi-card[data-check-id]').forEach(card => {
+    card.addEventListener('click', () => {
+      const checkId = card.dataset.checkId;
+      setActiveCard(activeCheckId === checkId ? null : checkId); // toggle
+    });
+  });
+
+  // ── Column sorting ───────────────────────────────────────────
+  document.querySelectorAll('th[data-col]').forEach(th => {
+    th.addEventListener('click', () => {
+      const col = th.dataset.col;
+      if (sortCol === col) {
+        sortDir *= -1;
+      } else {
+        sortCol = col;
+        sortDir = col === 'received_at' ? -1 : 1;
+      }
+      // Update sort icons
+      document.querySelectorAll('th[data-col] .sort-icon').forEach(ic => {
+        ic.classList.remove('active');
+        ic.textContent = '↕';
+      });
+      const icon = th.querySelector('.sort-icon');
+      if (icon) { icon.classList.add('active'); icon.textContent = sortDir === -1 ? '↓' : '↑'; }
+      renderLeadsTable();
+    });
+  });
+
+  // ── Initial render ───────────────────────────────────────────
+  renderLeadsTable();
+
+})();
+</script>
+{% endif %}
+
+</body>
+</html>
