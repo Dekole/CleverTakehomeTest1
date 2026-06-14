@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lead Compliance &amp; Outreach — Linear Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Patrick+Hand+SC&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#2c2c2a;
+    --ink-soft:#6b6b66;
+    --paper:#fbfaf6;
+    --paper-2:#f4f2ea;
+    --line:#3a3a36;
+    --hand:'Patrick Hand', 'Comic Sans MS', cursive;
+    --hand-sc:'Patrick Hand SC', 'Patrick Hand', cursive;
+
+    /* softened, more accessible severity palette */
+    --err-bg:#f4dcdc;  --err-tx:#8c2b2b;  --err-bd:#c07070;
+    --warn-bg:#f6e6cd; --warn-tx:#8a5a1c;  --warn-bd:#cfa168;
+    --concern-bg:#f3efcf; --concern-tx:#6f6411; --concern-bd:#c3b86a;
+    --info-bg:#e9ebee; --info-tx:#3c434a; --info-bd:#aab2ba;
+    --ok-bg:#dfeadf; --ok-tx:#2f5a35; --ok-bd:#8fb393;
+
+    --note-bg:#fdf6cf; --note-bd:#cdbd6e; --note-tx:#5b5117;
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  body{
+    font-family:var(--hand);
+    color:var(--ink);
+    background:
+      repeating-linear-gradient(0deg, transparent 0 31px, #e7e4d8 31px 32px),
+      var(--paper);
+    font-size:17px;
+    line-height:1.35;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- sketchy primitives ---------- */
+  .sk{ border:2.5px solid var(--line); border-radius:255px 14px 235px 14px/14px 235px 14px 255px; background:var(--paper); }
+  .sk-2{ border:2.5px solid var(--line); border-radius:14px 235px 14px 255px/235px 14px 255px 14px; background:var(--paper); }
+  .shadow{ box-shadow:3px 4px 0 rgba(44,44,42,.16); }
+
+  h1,h2,h3{ font-family:var(--hand-sc); font-weight:400; letter-spacing:.5px; margin:0; }
+  .muted{ color:var(--ink-soft); }
+  .tiny{ font-size:13.5px; }
+
+  /* ---------- top chrome ---------- */
+  header.topbar{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+    padding:12px 22px;
+    background:var(--paper);
+    border-bottom:2.5px solid var(--line);
+    box-shadow:0 3px 0 rgba(44,44,42,.08);
+  }
+  .brand{ font-family:var(--hand-sc); font-size:22px; }
+  .brand span{ color:var(--ink-soft); font-size:16px; }
+  nav.tabs{ display:flex; gap:10px; margin-left:6px; }
+  nav.tabs button{
+    font-family:var(--hand); font-size:16px; cursor:pointer;
+    padding:6px 14px; color:var(--ink);
+    border:2.5px solid var(--line); background:var(--paper-2);
+    border-radius:200px 12px 200px 12px/12px 200px 12px 200px;
+  }
+  nav.tabs button.active{ background:var(--ink); color:var(--paper); box-shadow:2px 3px 0 rgba(44,44,42,.25); }
+  .speclink{
+    margin-left:auto; font-family:var(--hand); font-size:16px; text-decoration:none;
+    color:var(--ink); padding:6px 14px; border:2.5px dashed var(--line);
+    border-radius:200px 12px 200px 12px/12px 200px 12px 200px; background:var(--note-bg);
+  }
+  .speclink:hover{ background:#fbefae; }
+
+  main{ max-width:1200px; margin:0 auto; padding:26px 22px 90px; }
+  .variation{ display:block; }
+  .variation.hidden{ display:none; }
+  .dirhead{ display:flex; align-items:baseline; gap:12px; margin-bottom:6px; }
+  .dirhead h2{ font-size:26px; }
+  .dirhead p{ margin:0; }
+
+  /* ---------- generic blocks ---------- */
+  .block{ padding:16px 18px; margin:14px 0; }
+  .block > .bt{ font-family:var(--hand-sc); font-size:18px; margin-bottom:10px; display:flex; align-items:center; gap:10px; }
+  .bt .num{ width:26px; height:26px; border:2.5px solid var(--line); border-radius:50%; display:grid; place-items:center; font-size:15px; background:var(--paper-2); }
+
+  .row{ display:flex; gap:14px; flex-wrap:wrap; }
+  .col{ flex:1 1 0; min-width:0; }
+
+  label.fld{ display:block; }
+  label.fld .lab{ font-size:14px; color:var(--ink-soft); margin-bottom:3px; }
+  .input{ border:2.5px solid var(--line); border-radius:120px 9px 120px 9px/9px 120px 9px 120px; background:#fff; padding:7px 12px; color:var(--ink); display:flex; align-items:center; justify-content:space-between; gap:8px; white-space:nowrap; }
+  .input > span:first-child{ min-width:0; }
+  .input .ph{ color:var(--ink-soft); flex:0 0 auto; font-size:14px; }
+  .input .car{ color:var(--ink-soft); flex:0 0 auto; }
+
+  .btn{ display:inline-flex; align-items:center; gap:8px; cursor:pointer; font-family:var(--hand); font-size:16px;
+    padding:8px 18px; border:2.5px solid var(--line); background:var(--paper-2);
+    border-radius:200px 12px 200px 12px/12px 200px 12px 200px; box-shadow:2px 3px 0 rgba(44,44,42,.18); }
+  .btn.primary{ background:var(--ink); color:var(--paper); }
+  .btn.dl::before{ content:"⭳"; font-size:18px; }
+
+  /* ---------- notes (machine-readable spec hints) ---------- */
+  .note{
+    position:relative; display:inline-block; max-width:320px;
+    font-size:14.5px; line-height:1.3; color:var(--note-tx);
+    background:var(--note-bg); border:1.8px dashed var(--note-bd);
+    border-radius:150px 10px 140px 10px/10px 140px 10px 150px;
+    padding:8px 12px 9px; transform:rotate(-.6deg);
+  }
+  .note .tag{ display:inline-block; font-family:var(--hand-sc); font-size:11.5px; letter-spacing:.5px;
+    color:#7a6c1f; background:#f3e49b; border:1.5px solid var(--note-bd); border-radius:6px;
+    padding:0 6px; margin-right:6px; transform:rotate(.6deg); }
+  .note.r{ transform:rotate(.7deg); }
+  .notewrap{ display:flex; gap:10px; flex-wrap:wrap; align-items:flex-start; margin-top:6px; }
+
+  /* ---------- legend ---------- */
+  .legend{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; font-size:14px; }
+  .lg{ display:inline-flex; align-items:center; gap:6px; padding:2px 9px; border:2px solid; border-radius:90px 8px 90px 8px/8px 90px 8px 90px; }
+  .lg .dot{ width:11px; height:11px; border-radius:50%; border:1.5px solid currentColor; }
+  .sev-error{ background:var(--err-bg); color:var(--err-tx); border-color:var(--err-bd); }
+  .sev-warn{ background:var(--warn-bg); color:var(--warn-tx); border-color:var(--warn-bd); }
+  .sev-concern{ background:var(--concern-bg); color:var(--concern-tx); border-color:var(--concern-bd); }
+  .sev-info{ background:var(--info-bg); color:var(--info-tx); border-color:var(--info-bd); }
+
+  /* ---------- summary cards ---------- */
+  .kpis{ display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; }
+  .kpi{ border:2.5px solid var(--line); border-radius:14px 200px 14px 200px/200px 14px 200px 14px; padding:11px 14px; background:#fff; position:relative; overflow:hidden; }
+  .kpi .klab{ font-size:14px; line-height:1.15; min-height:38px; padding-right:50px; }
+  .kpi.big .klab{ padding-right:0; }
+  .kpi .knum{ font-family:var(--hand-sc); font-size:30px; line-height:1; margin-top:6px; }
+  .kpi .kpct{ font-size:14px; color:var(--ink-soft); }
+  .kpi.sev-error{ background:var(--err-bg); } .kpi.sev-error .knum{ color:var(--err-tx); }
+  .kpi.sev-warn{ background:var(--warn-bg); } .kpi.sev-warn .knum{ color:var(--warn-tx); }
+  .kpi.sev-concern{ background:var(--concern-bg); } .kpi.sev-concern .knum{ color:var(--concern-tx); }
+  .kpi.sev-info{ background:#fff; } .kpi.sev-info .knum{ color:var(--ink); }
+  .kpi .badge{ position:absolute; top:8px; right:10px; font-size:11px; font-family:var(--hand-sc); letter-spacing:.4px;
+    padding:1px 7px; border:1.6px solid currentColor; border-radius:7px; }
+  .kpi.sev-error .badge{ color:var(--err-tx); } .kpi.sev-warn .badge{ color:var(--warn-tx); }
+  .kpi.sev-concern .badge{ color:var(--concern-tx); } .kpi.sev-info .badge{ color:var(--ink-soft); }
+  .kpi.big{ grid-column:span 2; display:flex; align-items:center; gap:16px; overflow:visible; min-width:190px; }
+  .kpi.big .knum{ font-size:46px; }
+
+  /* ---------- bars (variation C) ---------- */
+  .bars{ display:flex; flex-direction:column; gap:9px; }
+  .bar{ display:grid; grid-template-columns:230px 1fr 88px; align-items:center; gap:12px; font-size:15px; }
+  .bar .track{ height:18px; border:2px solid var(--line); border-radius:90px; background:#fff; overflow:hidden; }
+  .bar .fill{ height:100%; }
+  .bar.sev-error .fill{ background:var(--err-bd); } .bar.sev-warn .fill{ background:var(--warn-bd); }
+  .bar.sev-concern .fill{ background:var(--concern-bd); } .bar.sev-info .fill{ background:var(--info-bd); }
+  .bar .bv{ text-align:right; color:var(--ink-soft); white-space:nowrap; }
+
+  /* ---------- tables ---------- */
+  .tscroll{ overflow-x:auto; border:2.5px solid var(--line); border-radius:10px; background:#fff; }
+  table.w{ border-collapse:collapse; width:100%; font-size:14.5px; white-space:nowrap; }
+  table.w th, table.w td{ padding:7px 10px; border-bottom:1.6px solid #d9d6c9; border-right:1.6px dashed #e2dfd2; text-align:left; }
+  table.w thead th{ font-family:var(--hand-sc); font-weight:400; background:var(--paper-2); border-bottom:2.5px solid var(--line); position:relative; }
+  table.w th .car{ color:var(--ink-soft); font-size:12px; margin-left:3px; }
+  table.w tbody tr:hover{ background:#fbf7e6; }
+  table.w tr.sel{ background:#eef3e9; }
+  table.w td.mono, table.w th.mono{ font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; }
+  .chk{ display:inline-block; width:15px; height:15px; border:2px solid var(--line); border-radius:4px; background:#fff; vertical-align:-2px; }
+  .chk.on{ background:var(--ink); position:relative; }
+  .chk.on::after{ content:"✓"; color:#fff; font-size:12px; position:absolute; left:1px; top:-3px; }
+  .flag{ display:inline-block; font-size:12px; padding:0 7px; margin:1px 2px; border:1.6px solid; border-radius:7px; }
+  .flag.error{ background:var(--err-bg); color:var(--err-tx); border-color:var(--err-bd); }
+  .flag.warn{ background:var(--warn-bg); color:var(--warn-tx); border-color:var(--warn-bd); }
+  .flag.concern{ background:var(--concern-bg); color:var(--concern-tx); border-color:var(--concern-bd); }
+  .flag.ok{ background:var(--ok-bg); color:var(--ok-tx); border-color:var(--ok-bd); }
+  .toolbar{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:10px; }
+  .search{ flex:1 1 220px; }
+  .chips{ display:flex; gap:6px; flex-wrap:wrap; }
+  .chip{ font-size:13px; padding:2px 10px; border:2px solid var(--line); border-radius:90px; background:#fff; }
+  .chip.on{ background:var(--ink); color:var(--paper); }
+
+  /* ---------- detail panel ---------- */
+  .detail{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px 18px; }
+  .df{ }
+  .df .dl{ font-size:13px; color:var(--ink-soft); }
+  .df .dv{ font-size:16px; border-bottom:1.8px dotted #c8c5b6; padding-bottom:2px; min-height:22px; }
+  .df.hl .dv{ background:var(--concern-bg); border-bottom-color:var(--concern-bd); padding:1px 6px; }
+
+  /* ---------- export cards ---------- */
+  .exports{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .exp{ padding:14px 16px; }
+  .exp .ename{ font-family:var(--hand-sc); font-size:17px; }
+  .exp .fname{ font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px; background:var(--paper-2); border:1.6px solid #d9d6c9; border-radius:6px; padding:2px 8px; display:inline-block; margin:6px 0; }
+  .exp .cols{ font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12px; color:var(--ink-soft); line-height:1.5; }
+
+  .arrow{ text-align:center; font-size:24px; color:var(--ink-soft); margin:2px 0; }
+  .stepper{ display:flex; align-items:center; gap:0; flex-wrap:wrap; }
+  .step{ display:flex; align-items:center; gap:8px; padding:6px 14px; border:2.5px solid var(--line); background:#fff;
+    border-radius:200px 12px 200px 12px/12px 200px 12px 200px; }
+  .step.on{ background:var(--ink); color:var(--paper); }
+  .step .sn{ width:22px; height:22px; border-radius:50%; border:2px solid currentColor; display:grid; place-items:center; font-size:13px; }
+  .steparr{ color:var(--ink-soft); padding:0 8px; font-size:18px; }
+  .innertabs{ display:flex; gap:8px; border-bottom:2.5px solid var(--line); margin-bottom:12px; }
+  .innertab{ padding:6px 16px; border:2.5px solid var(--line); border-bottom:none; background:var(--paper-2); font-size:15px;
+    border-radius:12px 12px 0 0; transform:translateY(2.5px); }
+  .innertab.on{ background:var(--paper); font-family:var(--hand-sc); }
+
+  .ghost{ opacity:.62; }
+  .srchwrap{ display:flex; align-items:center; gap:7px; flex:1 1 240px; }
+  .srchwrap .search{ flex:1 1 auto; }
+  .v2tag{ font-size:11.5px; font-family:var(--hand-sc); letter-spacing:.4px; color:#5b5117; background:#f3e49b;
+    border:1.5px solid var(--note-bd); border-radius:6px; padding:1px 7px; white-space:nowrap; flex:0 0 auto; }
+  .collapsed{ display:flex; align-items:center; justify-content:space-between; padding:11px 16px; }
+  .hr{ border:none; border-top:2.5px dashed #cfccbe; margin:18px 0; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">Lead Compliance &amp; Outreach Recon <span>· Linear report</span></div>
+
+  <a class="speclink" href="SPEC.md" target="_blank">📄 build spec ↗</a>
+</header>
+
+<main>
+
+<!-- ============================================================ A -->
+<section id="vA" class="variation" data-screen-label="Direction A — Linear report">
+  <div class="dirhead">
+    <h2>A · Linear report</h2>
+    <p class="muted">One scrolling page, top-to-bottom workflow. Closest to the original — just clearer rhythm, real tables, softened severity. Good default for a demo walk-through.</p>
+  </div>
+
+  <!-- inputs -->
+  <div class="block sk shadow">
+    <div class="bt"><span class="num">1</span> Inputs</div>
+    <div class="row">
+      <label class="fld col"><span class="lab">Leads file</span><span class="input"><span>leads.csv</span><span class="ph">⭱</span></span></label>
+      <label class="fld col"><span class="lab">Outreach log</span><span class="input"><span>outreach_log.csv</span><span class="ph">⭱</span></span></label>
+      <label class="fld col"><span class="lab">Date start</span><span class="input"><span class="ph">all data</span><span class="car">▾</span></span></label>
+      <label class="fld col"><span class="lab">Date end</span><span class="input"><span class="ph">all data</span><span class="car">▾</span></span></label>
+      <div style="display:flex; align-items:flex-end;"><button class="btn primary">▶ Process</button></div>
+    </div>
+    <div class="notewrap">
+      <span class="note"><span class="tag">note</span>Both files default to the bundled CSVs. Date range filters the whole report on <b>received_at</b>; blank = all data.</span>
+    </div>
+  </div>
+
+  <!-- summary -->
+  <div class="block sk shadow">
+    <div class="bt"><span class="num">2</span> Leads — error report · summary</div>
+    <div class="notewrap" style="margin-bottom:10px;">
+      <div class="legend">
+        <span class="lg sev-error"><span class="dot"></span>error</span>
+        <span class="lg sev-warn"><span class="dot"></span>warn</span>
+        <span class="lg sev-concern"><span class="dot"></span>concern</span>
+        <span class="lg sev-info"><span class="dot"></span>info</span>
+        <span class="muted tiny">— severity coding (softened from red/orange/yellow/white)</span>
+      </div>
+    </div>
+    <div class="kpis">
+      <div class="kpi sev-info big"><div><div class="klab">Total leads in range</div></div><div class="knum">206</div><div class="kpct">100%</div></div>
+      <div class="kpi sev-error"><span class="badge">error</span><div class="klab">No contact — but reachable</div><div class="knum">18</div><div class="kpct">8.8%</div></div>
+      <div class="kpi sev-warn"><span class="badge">warn</span><div class="klab">SLA breach</div><div class="knum">20</div><div class="kpct">9.7%</div></div>
+      <div class="kpi sev-info"><span class="badge">info</span><div class="klab">No contact — no method on file</div><div class="knum">0</div><div class="kpct">0%</div></div>
+      <div class="kpi sev-error"><span class="badge">error</span><div class="klab">Clear legal TCPA violations</div><div class="knum">9</div><div class="kpct">4.4%</div></div>
+      <div class="kpi sev-warn"><span class="badge">warn</span><div class="klab">Borderline legal TCPA</div><div class="knum">9</div><div class="kpct">4.4%</div></div>
+      <div class="kpi sev-concern"><span class="badge">concern</span><div class="klab">Consent missing (TCPA concern)</div><div class="knum">9</div><div class="kpct">4.4%</div></div>
+      <div class="kpi sev-error"><span class="badge">error</span><div class="klab">TCPA quiet-hour violations</div><div class="knum">9</div><div class="kpct">4.4%</div></div>
+      <div class="kpi sev-info"><span class="badge">info</span><div class="klab">Leads with phone pickup</div><div class="knum">9</div><div class="kpct">4.4%</div></div>
+      <div class="kpi sev-info"><span class="badge">info</span><div class="klab">Called &gt;1x, 1 pickup</div><div class="knum">12</div><div class="kpct">5.8%</div></div>
+      <div class="kpi sev-info"><span class="badge">info</span><div class="klab">Called &gt;1x, 2 pickups</div><div class="knum">5</div><div class="kpct">2.4%</div></div>
+    </div>
+  </div>
+
+  <!-- leads list -->
+  <div class="block sk shadow">
+    <div class="bt"><span class="num">3</span> Leads list <span class="muted tiny">— click a row to drill in</span></div>
+    <div class="toolbar">
+      <div class="srchwrap"><span class="input search"><span class="ph">🔍 search name / lead_id / phone…</span></span><span class="v2tag">v2 · client-side</span></div>
+      <div class="chips">
+        <span class="chip on">all</span><span class="chip">no-outreach</span><span class="chip">legal</span><span class="chip">SLA</span><span class="chip">other</span>
+      </div>
+      <button class="btn dl">Download leads</button>
+    </div>
+    <div class="tscroll">
+      <table class="w">
+        <thead>
+          <tr>
+            <th><span class="chk"></span></th>
+            <th class="mono">lead_id <span class="car">▾</span></th>
+            <th>source</th>
+            <th>received_at <span class="car">▾</span></th>
+            <th>first_name</th><th>last_name</th>
+            <th>phone</th><th>email</th>
+            <th>sms</th><th>call</th>
+            <th>type</th><th>status</th>
+            <th>resp_time</th><th>pickup</th>
+            <th>flags · err_*</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="sel">
+            <td><span class="chk on"></span></td>
+            <td class="mono">L-20020</td><td>AgentMatch Pro</td><td class="mono">5/15/26 13:35</td>
+            <td>Eric</td><td>Rodriguez</td><td class="mono">365-959-8239</td><td class="muted">—</td>
+            <td>TRUE</td><td>TRUE</td><td>seller</td><td>new</td><td class="mono">—</td><td class="muted">—</td>
+            <td><span class="flag error">no-outreach</span><span class="flag concern">no-email</span></td>
+          </tr>
+          <tr>
+            <td><span class="chk"></span></td>
+            <td class="mono">L-20133</td><td>ListingLoop</td><td class="mono">5/10/26 20:28</td>
+            <td>Tony</td><td>Jackson</td><td class="mono">7174079792</td><td class="mono">tony.jackson8@…</td>
+            <td>TRUE</td><td>TRUE</td><td>buyer</td><td>new</td><td class="mono">14m</td><td><span class="flag ok">yes</span></td>
+            <td><span class="flag warn">quiet-hour</span></td>
+          </tr>
+          <tr>
+            <td><span class="chk"></span></td>
+            <td class="mono">L-20030</td><td>SellFast Direct</td><td class="mono">5/5/26 18:18</td>
+            <td>Brian</td><td>Taylor</td><td class="mono">(841) 444-5499</td><td class="mono">brian.taylor70@…</td>
+            <td>TRUE</td><td>TRUE</td><td>seller</td><td>new</td><td class="mono">3h 02m</td><td class="muted">no</td>
+            <td><span class="flag warn">SLA</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="notewrap">
+      <span class="note"><span class="tag">data</span>All columns sourced from <b>leads.csv</b> <i>except</i> the derived columns: <b>lead_response_time, status_pickup, call_count, pickup_count, err_nooutreach, err_legal, err_SLA, err_others</b> (computed at Process time).</span>
+      <span class="note r"><span class="tag">ux</span>Selectable rows (checkbox + row click). Sortable headers. Row tint reflects highest-severity flag.</span>
+    </div>
+  </div>
+
+  <!-- lead detail -->
+  <div class="block sk shadow">
+    <div class="bt"><span class="num">4</span> Lead item detail <span class="muted tiny">— selected: L-20020</span></div>
+    <div class="detail">
+      <div class="df"><div class="dl">lead_id</div><div class="dv mono">L-20020</div></div>
+      <div class="df"><div class="dl">name</div><div class="dv">Eric Rodriguez</div></div>
+      <div class="df"><div class="dl">source</div><div class="dv">AgentMatch Pro</div></div>
+      <div class="df"><div class="dl">phone</div><div class="dv mono">365-959-8239</div></div>
+      <div class="df"><div class="dl">email</div><div class="dv muted">—</div></div>
+      <div class="df"><div class="dl">consent_sms / call</div><div class="dv">TRUE / TRUE</div></div>
+      <div class="df"><div class="dl">lead_response_time</div><div class="dv muted">— (no outreach)</div></div>
+      <div class="df"><div class="dl">status_pickup</div><div class="dv">no</div></div>
+      <div class="df"><div class="dl">property_zip / type</div><div class="dv">32801 / seller</div></div>
+      <div class="df hl"><div class="dl">err_nooutreach</div><div class="dv">TRUE — reachable, never contacted</div></div>
+      <div class="df hl"><div class="dl">err_legal</div><div class="dv">none</div></div>
+      <div class="df hl"><div class="dl">err_others</div><div class="dv">missing email on file</div></div>
+    </div>
+    <div class="notewrap">
+      <span class="note"><span class="tag">note</span>Detail shows the full row for the clicked lead. The three <b>err_*</b> reason fields are surfaced prominently (highlighted) so the analyst sees <i>why</i> a lead is flagged.</span>
+    </div>
+  </div>
+
+  <!-- outreach -->
+  <div class="block sk shadow">
+    <div class="bt"><span class="num">5</span> Outreach items related to selected lead(s)</div>
+    <div class="tscroll">
+      <table class="w">
+        <thead>
+          <tr><th><span class="chk"></span></th><th class="mono">attempt_id</th><th class="mono">lead_id</th><th>channel</th><th>attempted_at</th><th>status</th><th class="mono">agent_id</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="chk"></span></td><td class="mono">A-1269</td><td class="mono">L-20148</td><td>call</td><td class="mono">5/4/26 7:37</td><td><span class="flag warn">no_answer</span></td><td class="mono">AGT-107</td></tr>
+          <tr><td><span class="chk"></span></td><td class="mono">A-1270</td><td class="mono">L-20148</td><td>sms</td><td class="mono">5/4/26 7:47</td><td><span class="flag ok">delivered</span></td><td class="mono">AGT-107</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="notewrap">
+      <span class="note"><span class="tag">data</span>All columns from <b>outreach_log.csv</b>. Filtered to the lead(s) selected above. Selectable rows.</span>
+    </div>
+  </div>
+
+  <!-- exports -->
+  <div class="block sk shadow">
+    <div class="bt"><span class="num">6</span> Exports</div>
+    <div class="exports">
+      <div class="exp sk-2">
+        <div class="ename">Flatfile · Leads + Outreach</div>
+        <div class="fname">leads_outreach_[datetime].csv</div>
+        <div class="cols">l_leadid, l_source, l_receivedat, l_firstname, l_lastname, l_phone, l_email, l_consentsms, l_consentcall, l_propertyzip, l_leadtype, l_status, o_attempt_id, o_lead_id, o_channel, o_attempted_at, o_status, o_agent_id, error</div>
+        <div style="margin-top:10px;"><button class="btn dl primary">Download</button></div>
+      </div>
+      <div class="exp sk-2">
+        <div class="ename">Outreach · No matching leads</div>
+        <div class="fname">outreach_nomatchingleads.csv</div>
+        <div class="cols">all columns from outreach_log.csv — attempts whose lead_id has no row in leads.csv</div>
+        <div style="margin-top:10px;"><button class="btn dl">Download</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+
+</body>
+</html>

@@ -1,0 +1,207 @@
+l_leadid,l_source,l_receivedat,l_firstname,l_lastname,l_phone,l_email,l_consentsms,l_consentcall,l_propertyzip,l_leadtype,l_status,firstresponse_duration,firstresponse_type,sms_last_agent,sms_last_status,call_last_agent,call_last_status
+L-20020,AgentMatch Pro,2026-05-15 13:35:00,Eric,Rodriguez,365-959-8239,,TRUE,TRUE,32801,seller,new,7,call,AGT-138,delivered,AGT-138,completed
+L-20133,ListingLoop,2026-05-10 20:28:00,Tony,Jackson,7174079792,tony.jackson8@example.com,TRUE,TRUE,30318,buyer,new,9,call,AGT-120,delivered,AGT-120,no_answer
+L-20030,SellFast Direct,2026-05-05 18:18:00,Brian,Taylor,(841) 444-5499,brian.taylor70@example.com,TRUE,TRUE,30318,seller,new,5,call,AGT-125,delivered,AGT-125,completed
+L-20058,SellFast Direct,2026-05-05 10:24:00,Matt,Hall,+15094037302,matt.hall90@example.com,TRUE,TRUE,63101,buyer,new,6,call,AGT-101,delivered,AGT-101,no_answer
+L-20050,OfferNest,2026-05-04 17:38:00,Michael,Young,494.648.8941,michael.young40@example.com,FALSE,TRUE,63101,buyer,new,3,call,,,AGT-115,voicemail
+L-20179,SellFast Direct,2026-05-11 8:40:00,Kevin,Perez,(475) 842-7786,kevin.perez99@example.com,TRUE,TRUE,43215,seller,new,7,call,,,AGT-130,no_answer
+L-20105,AgentMatch Pro,2026-05-14 7:31:00,John,Perez,+14159857825,john.perez83@example.com,FALSE,TRUE,89108,seller,new,12,call,,,AGT-126,completed
+L-20132,LeadBridge,2026-05-09 15:28:00,Tony,Jackson,717.407.9792,tony.jackson27@example.com,TRUE,TRUE,89108,seller,new,9,call,,,AGT-137,completed
+L-20036,OfferNest,2026-05-15 19:19:00,Daniel,White,403.277.4978,daniel.white16@example.com,FALSE,TRUE,63101,seller,new,10,call,,,AGT-128,completed
+L-20155,AgentMatch Pro,2026-05-08 19:15:00,Megan,Martin,+18765892404,megan.martin11@example.com,FALSE,TRUE,30318,buyer,new,12,call,AGT-110,delivered,AGT-110,no_answer
+L-20095,HomeFlow,2026-05-05 19:23:00,Diana,Clark,2488716438,diana.clark57@example.com,TRUE,TRUE,28269,seller,new,9,call,AGT-132,delivered,AGT-132,no_answer
+L-20028,OfferNest,2026-05-16 13:14:00,Karen,Jones,8719041090,karen.jones67@example.com,TRUE,TRUE,63101,seller,new,3,call,,,AGT-130,completed
+L-20114,OfferNest,2026-05-12 20:45:00,Chris,Lewis,+16857318487,chris.lewis18@example.com,TRUE,TRUE,75217,seller,new,,,,,,
+L-20090,ListingLoop,2026-05-11 14:39:00,Michael,Johnson,+14936833273,,TRUE,TRUE,85032,seller,new,10,call,AGT-139,delivered,AGT-139,no_answer
+L-20151,OfferNest,2026-05-05 16:24:00,Karen,White,+14315072320,karen.white56@example.com,TRUE,TRUE,75217,seller,new,11,call,,,AGT-131,completed
+L-20104,OfferNest,2026-05-12 17:10:00,John,Jones,840.510.9740,john.jones22@example.com,TRUE,TRUE,75217,seller,new,11,call,AGT-103,delivered,AGT-103,no_answer
+L-20071,ListingLoop,2026-05-04 11:38:00,Megan,Brown,620-562-7929,megan.brown65@example.com,TRUE,TRUE,30318,buyer,new,5,call,AGT-107,delivered,AGT-107,completed
+L-20119,OfferNest,2026-05-15 18:32:00,Greg,Lee,+16829532020,greg.lee72@example.com,TRUE,TRUE,89108,buyer,new,,,,,,
+L-20033,OfferNest,2026-05-14 13:08:00,Daniel,Martin,7778781444,daniel.martin34@example.com,FALSE,TRUE,28269,seller,new,9,call,,,AGT-121,completed
+L-20077,HomeFlow,2026-05-05 13:01:00,Kevin,Anderson,7876147843,kevin.anderson80@example.com,,TRUE,28269,seller,new,8,call,,,AGT-107,completed
+L-20160,HomeFlow,2026-05-09 16:44:00,Matt,Hernandez,640-866-3230,matt.hernandez41@example.com,TRUE,TRUE,43215,seller,new,12,sms,AGT-119,failed_err30006_landline,,
+L-20184,AgentMatch Pro,2026-05-14 14:00:00,David,Taylor,+12793354705,,TRUE,TRUE,78704,buyer,new,4,call,,,AGT-131,no_answer
+L-20009,AgentMatch Pro,2026-05-09 14:01:00,Greg,Garcia,752-743-1009,greg.garcia40@example.com,TRUE,TRUE,63101,seller,new,11,call,,,AGT-106,completed
+L-20195,LeadBridge,2026-05-11 12:24:00,Diana,Hall,(212) 450-1753,diana.hall23@example.com,TRUE,TRUE,32801,buyer,new,187,call,,,AGT-121,completed
+L-20170,AgentMatch Pro,2026-05-06 17:45:00,Kevin,Brown,556.560.8501,kevin.brown79@example.com,TRUE,TRUE,78704,seller,new,3,sms,AGT-121,failed_err30006_landline,,
+L-20171,AgentMatch Pro,2026-05-10 13:38:00,Lisa,Brown,3875823316,lisa.brown50@example.com,TRUE,TRUE,30318,buyer,new,12,sms,AGT-135,failed_err30006_landline,,
+L-20002,ListingLoop,2026-05-14 18:34:00,Karen,Moore,(816) 227-4257,karen.moore36@example.com,TRUE,TRUE,30318,buyer,new,7,call,,,AGT-118,completed
+L-20173,SellFast Direct,2026-05-14 14:26:00,Tony,Wilson,7757179109,tony.wilson57@example.com,TRUE,TRUE,30318,seller,new,11,call,,,AGT-102,no_answer
+L-20206,LeadBridge,2026-05-11 9:02:00,David,Young,391-481-5585,david.young79@example.com,TRUE,TRUE,37211,buyer,new,235,call,AGT-136,delivered,AGT-136,no_answer
+L-20107,OfferNest,2026-05-15 7:32:00,Jessica,Brown,(526) 447-8642,jessica.brown19@example.com,TRUE,TRUE,63101,seller,new,,,,,,
+L-20138,LeadBridge,2026-05-07 19:55:00,Karen,Harris,245.611.8191,karen.harris18@example.com,TRUE,TRUE,37211,seller,new,5,call,AGT-120,delivered,AGT-120,completed
+L-20120,OfferNest,2026-05-14 17:11:00,Matt,Young,+17455509950,matt.young93@example.com,TRUE,TRUE,75217,buyer,new,,,,,,
+L-20178,ListingLoop,2026-05-06 18:55:00,Michael,Clark,+16212605543,michael.clark19@example.com,TRUE,TRUE,85032,buyer,new,9,call,,,AGT-110,no_answer
+L-20059,LeadBridge,2026-05-14 10:39:00,Rachel,Taylor,493-435-6772,rachel.taylor99@example.com,TRUE,TRUE,78704,seller,new,6,call,,,AGT-129,completed
+L-20112,OfferNest,2026-05-12 3:24:00,Brian,Thomas,(982) 763-5582,brian.thomas79@example.com,FALSE,TRUE,30318,seller,new,,,,,,
+L-20035,HomeFlow,2026-05-06 16:38:00,Kevin,Miller,+16769165198,kevin.miller21@example.com,,TRUE,78704,seller,new,6,call,,,AGT-137,no_answer
+L-20087,ListingLoop,2026-05-13 14:29:00,Laura,Lewis,680.398.7026,laura.lewis65@example.com,TRUE,TRUE,43215,seller,new,5,call,,,AGT-139,completed
+L-20108,OfferNest,2026-05-15 11:55:00,Ashley,Anderson,454-363-6364,ashley.anderson25@example.com,,TRUE,89108,buyer,new,,,,,,
+L-20032,HomeFlow,2026-05-10 14:01:00,Ashley,Allen,425-699-4595,ashley.allen52@example.com,TRUE,TRUE,89108,seller,new,11,call,,,AGT-135,completed
+L-20106,OfferNest,2026-05-15 19:30:00,Matt,Miller,+15488213353,matt.miller94@example.com,TRUE,TRUE,43215,seller,new,,,,,,
+L-20011,OfferNest,2026-05-09 7:37:00,Brian,Thomas,(323) 453-4681,brian.thomas1@example.com,TRUE,TRUE,63101,seller,new,3,call,AGT-103,delivered,AGT-103,no_answer
+L-20027,LeadBridge,2026-05-14 11:14:00,Megan,Perez,834-543-2530,megan.perez6@example.com,FALSE,TRUE,89108,seller,new,9,call,,,AGT-127,no_answer
+L-20102,ListingLoop,2026-05-15 14:33:00,Paul,Williams,(267) 516-7523,paul.williams74@example.com,TRUE,TRUE,30318,seller,new,12,call,AGT-105,delivered,AGT-105,no_answer
+L-20025,ListingLoop,2026-05-10 12:25:00,Rachel,Allen,5077196067,rachel.allen25@example.com,TRUE,TRUE,43215,seller,new,11,call,,,AGT-137,completed
+L-20004,OfferNest,2026-05-10 11:29:00,Megan,Davis,+14962814814,megan.davis48@example.com,TRUE,TRUE,85032,seller,new,12,call,AGT-105,delivered,AGT-105,completed
+L-20055,ListingLoop,2026-05-15 19:31:00,Diana,Thompson,(746) 589-6188,,FALSE,TRUE,85032,seller,new,5,call,,,AGT-106,no_answer
+L-20186,HomeFlow,2026-05-15 10:40:00,James,Lee,865.368.8210,james.lee53@example.com,TRUE,TRUE,89108,seller,new,3,call,,,AGT-107,no_answer
+L-20054,SellFast Direct,2026-05-04 18:09:00,Linda,Hall,(650) 302-9617,linda.hall20@example.com,TRUE,TRUE,89108,seller,new,7,call,AGT-140,delivered,AGT-140,no_answer
+L-20191,LeadBridge,2026-05-10 16:40:00,Heather,Miller,(359) 749-6353,heather.miller84@example.com,TRUE,TRUE,37211,buyer,new,316,call,,,AGT-116,completed
+L-20078,LeadBridge,2026-05-05 15:40:00,Lisa,Harris,+15474266456,lisa.harris45@example.com,TRUE,TRUE,30318,seller,new,3,call,,,AGT-110,completed
+L-20067,LeadBridge,2026-05-08 7:08:00,Laura,Davis,(802) 531-1258,laura.davis96@example.com,TRUE,TRUE,89108,buyer,new,7,call,AGT-133,delivered,AGT-133,completed
+L-20128,OfferNest,2026-05-09 9:00:00,James,Harris,5455024164,james.harris52@example.com,TRUE,TRUE,32801,seller,new,3,call,AGT-126,delivered,AGT-126,no_answer
+L-20081,AgentMatch Pro,2026-05-14 10:20:00,Kevin,Jackson,9562428368,kevin.jackson8@example.com,TRUE,TRUE,78704,seller,new,3,call,AGT-133,delivered,AGT-133,no_answer
+L-20099,SellFast Direct,2026-05-12 13:58:00,Karen,Brown,2269534048,karen.brown34@example.com,TRUE,TRUE,85032,seller,new,9,call,,,AGT-113,completed
+L-20101,OfferNest,2026-05-07 19:08:00,Eric,Garcia,570.720.4673,eric.garcia47@example.com,TRUE,TRUE,75217,seller,new,9,call,,,AGT-136,completed
+L-20075,OfferNest,2026-05-07 13:38:00,Megan,Martin,698-739-6053,megan.martin28@example.com,TRUE,TRUE,37211,seller,new,7,call,,,AGT-108,completed
+L-20065,ListingLoop,2026-05-07 17:40:00,John,Miller,+13256652501,,TRUE,TRUE,85032,seller,new,11,call,,,AGT-114,completed
+L-20147,LeadBridge,2026-05-17 1:22:00,Greg,Walker,(700) 940-9037,greg.walker83@example.com,TRUE,TRUE,32801,seller,new,4,call,,,AGT-101,completed
+L-20116,OfferNest,2026-05-11 13:23:00,Chris,Thompson,(312) 626-6040,chris.thompson89@example.com,FALSE,TRUE,75217,buyer,new,,,,,,
+L-20066,LeadBridge,2026-05-09 19:09:00,Greg,Jackson,412-800-4538,greg.jackson36@example.com,FALSE,TRUE,30318,seller,new,4,call,,,AGT-108,completed
+L-20188,LeadBridge,2026-05-12 16:32:00,Scott,Smith,+18745084366,scott.smith51@example.com,TRUE,TRUE,63101,seller,new,256,call,,,AGT-125,completed
+L-20157,AgentMatch Pro,2026-05-13 19:20:00,Linda,Smith,+12915622524,linda.smith2@example.com,,TRUE,43215,buyer,new,3,call,AGT-136,delivered,AGT-136,no_answer
+L-20053,AgentMatch Pro,2026-05-10 10:54:00,Chris,Hall,3939144912,,TRUE,TRUE,43215,buyer,new,12,call,AGT-110,delivered,AGT-110,completed
+L-20012,LeadBridge,2026-05-16 14:51:00,David,Jackson,3359408744,david.jackson85@example.com,TRUE,TRUE,28269,buyer,new,8,call,AGT-130,delivered,AGT-130,completed
+L-20022,HomeFlow,2026-05-06 19:44:00,Emily,Lewis,885-952-5065,emily.lewis61@example.com,TRUE,TRUE,85032,buyer,new,7,call,AGT-120,delivered,AGT-120,completed
+L-20103,SellFast Direct,2026-05-12 7:53:00,Eric,Martin,386-986-3114,eric.martin22@example.com,TRUE,TRUE,28269,seller,new,7,call,AGT-134,delivered,AGT-134,no_answer
+L-20176,LeadBridge,2026-05-07 19:47:00,John,Lopez,289.649.2923,john.lopez45@example.com,TRUE,TRUE,43215,seller,new,11,call,,,AGT-109,no_answer
+L-20031,SellFast Direct,2026-05-16 16:44:00,Matt,Anderson,2634117883,matt.anderson74@example.com,TRUE,TRUE,89108,seller,new,7,call,AGT-120,delivered,AGT-120,no_answer
+L-20115,OfferNest,2026-05-13 2:25:00,Ashley,Harris,506.807.6511,ashley.harris63@example.com,TRUE,TRUE,37211,buyer,new,,,,,,
+L-20043,SellFast Direct,2026-05-05 16:40:00,Diana,Taylor,+13162667565,diana.taylor73@example.com,TRUE,TRUE,78704,seller,new,3,call,AGT-136,delivered,AGT-136,no_answer
+L-20122,OfferNest,2026-05-15 2:35:00,Heather,Young,9384805715,heather.young49@example.com,TRUE,TRUE,28269,seller,new,,,,,,
+L-20172,LeadBridge,2026-05-09 14:39:00,Jessica,Garcia,+17014953298,,TRUE,TRUE,63101,buyer,new,4,call,,,AGT-113,no_answer
+L-20014,LeadBridge,2026-05-10 14:30:00,Jessica,Walker,215-295-4872,jessica.walker8@example.com,TRUE,TRUE,43215,seller,new,8,call,AGT-117,delivered,AGT-117,no_answer
+L-20093,AgentMatch Pro,2026-05-15 19:21:00,Robert,Lopez,446-950-2698,robert.lopez44@example.com,TRUE,TRUE,89108,buyer,new,12,call,AGT-112,delivered,AGT-112,voicemail
+L-20096,HomeFlow,2026-05-09 8:05:00,Robert,Anderson,816.384.9937,robert.anderson58@example.com,TRUE,TRUE,43215,seller,new,9,call,AGT-123,delivered,AGT-123,completed
+L-20199,LeadBridge,2026-05-05 7:58:00,Emily,Taylor,2613455584,emily.taylor67@example.com,TRUE,TRUE,28269,buyer,new,321,call,AGT-106,delivered,AGT-106,completed
+L-20142,HomeFlow,2026-05-14 16:38:00,Robert,Jackson,(941) 395-1844,,TRUE,TRUE,85032,seller,new,5,call,AGT-108,delivered,AGT-108,no_answer
+L-20200,LeadBridge,2026-05-07 11:16:00,Kevin,Martin,+12636453141,kevin.martin51@example.com,TRUE,TRUE,28269,buyer,new,199,call,,,AGT-115,completed
+L-20073,SellFast Direct,2026-05-10 14:21:00,James,Williams,964.743.4524,james.williams42@example.com,TRUE,TRUE,75217,seller,new,2,call,,,AGT-110,completed
+L-20117,OfferNest,2026-05-14 4:41:00,Laura,Clark,792.791.4728,laura.clark22@example.com,TRUE,TRUE,75217,buyer,new,,,,,,
+L-20074,SellFast Direct,2026-05-14 13:31:00,Ashley,Johnson,890.283.5458,ashley.johnson28@example.com,TRUE,TRUE,78704,seller,new,8,call,,,AGT-108,completed
+L-20168,OfferNest,2026-05-15 16:56:00,Sarah,Perez,8736427481,sarah.perez76@example.com,TRUE,TRUE,43215,seller,new,5,sms,AGT-114,failed_err30006_landline,,
+L-20131,OfferNest,2026-05-08 12:00:00,Emily,White,762-682-9806,emily.white98@example.com,FALSE,TRUE,75217,seller,new,10,call,AGT-129,delivered,AGT-129,completed
+L-20017,LeadBridge,2026-05-14 17:19:00,Scott,Hernandez,(444) 471-7484,scott.hernandez10@example.com,TRUE,TRUE,89108,seller,new,3,call,,,AGT-135,completed
+L-20038,AgentMatch Pro,2026-05-13 17:24:00,Robert,Rodriguez,661-449-8613,robert.rodriguez42@example.com,TRUE,TRUE,89108,seller,new,7,call,,,AGT-117,completed
+L-20040,ListingLoop,2026-05-13 12:30:00,Karen,Wilson,908.449.6016,karen.wilson96@example.com,TRUE,TRUE,28269,seller,new,9,call,,,AGT-118,completed
+L-20149,SellFast Direct,2026-05-05 1:34:00,Matt,Lopez,261.832.8916,matt.lopez3@example.com,TRUE,TRUE,43215,seller,new,7,call,AGT-118,delivered,AGT-118,no_answer
+L-20097,HomeFlow,2026-05-12 19:47:00,Laura,Johnson,276.887.7655,laura.johnson19@example.com,TRUE,TRUE,89108,seller,new,4,call,,,AGT-105,completed
+L-20110,OfferNest,2026-05-11 21:18:00,Amanda,Lee,(869) 888-8710,,TRUE,TRUE,43215,seller,new,,,,,,
+L-20086,ListingLoop,2026-05-11 7:26:00,Sarah,Walker,909.989.3712,sarah.walker57@example.com,TRUE,TRUE,37211,buyer,new,5,call,,,AGT-135,completed
+L-20029,SellFast Direct,2026-05-13 18:57:00,Matt,Thompson,7437726198,matt.thompson71@example.com,TRUE,TRUE,30318,buyer,new,9,call,AGT-117,delivered,AGT-117,no_answer
+L-20130,OfferNest,2026-05-07 17:00:00,Brian,Young,+19209886095,brian.young38@example.com,TRUE,TRUE,75217,seller,new,5,call,AGT-109,delivered,AGT-109,no_answer
+L-20079,LeadBridge,2026-05-16 17:31:00,Sarah,Lee,3569782234,sarah.lee75@example.com,TRUE,TRUE,75217,seller,new,12,call,,,AGT-121,completed
+L-20193,LeadBridge,2026-05-09 9:47:00,Laura,Walker,(938) 465-3735,laura.walker35@example.com,TRUE,TRUE,63101,seller,new,336,call,,,AGT-128,completed
+L-20181,AgentMatch Pro,2026-05-13 9:36:00,Amanda,Rodriguez,(530) 490-6533,amanda.rodriguez44@example.com,TRUE,TRUE,63101,seller,new,12,call,,,AGT-130,no_answer
+L-20113,OfferNest,2026-05-15 13:23:00,Laura,Hernandez,(771) 574-3363,laura.hernandez65@example.com,TRUE,TRUE,63101,seller,new,,,,,,
+L-20023,ListingLoop,2026-05-12 13:43:00,Chris,Rodriguez,(271) 485-6753,chris.rodriguez4@example.com,,TRUE,37211,seller,new,11,call,,,AGT-117,no_answer
+L-20174,HomeFlow,2026-05-07 15:18:00,Laura,Clark,425.499.1535,laura.clark59@example.com,TRUE,TRUE,89108,seller,new,11,call,,,AGT-108,no_answer
+L-20084,OfferNest,2026-05-14 17:27:00,Megan,White,+19569019624,,TRUE,TRUE,30318,seller,new,7,call,,,AGT-132,completed
+L-20063,OfferNest,2026-05-04 11:31:00,Lisa,Perez,618-319-3290,lisa.perez69@example.com,TRUE,TRUE,43215,buyer,new,7,call,AGT-135,delivered,AGT-135,no_answer
+L-20158,HomeFlow,2026-05-08 14:09:00,Megan,Wilson,3733425405,,FALSE,TRUE,37211,buyer,new,6,call,AGT-131,delivered,AGT-131,no_answer
+L-20056,OfferNest,2026-05-08 12:23:00,Scott,Martinez,229.247.6314,scott.martinez53@example.com,TRUE,TRUE,30318,seller,new,4,call,AGT-106,delivered,AGT-106,no_answer
+L-20094,LeadBridge,2026-05-04 12:59:00,Matt,Johnson,5004061717,matt.johnson70@example.com,TRUE,TRUE,37211,seller,new,12,call,,,AGT-113,completed
+L-20021,ListingLoop,2026-05-07 17:06:00,Heather,Lewis,240.566.4441,heather.lewis53@example.com,TRUE,TRUE,30318,seller,new,4,call,AGT-112,delivered,AGT-112,no_answer
+L-20018,HomeFlow,2026-05-08 9:28:00,John,Jones,557.270.5002,john.jones79@example.com,FALSE,TRUE,63101,seller,new,12,call,,,AGT-107,no_answer
+L-20042,LeadBridge,2026-05-08 7:03:00,Nancy,Garcia,5092149751,nancy.garcia17@example.com,TRUE,TRUE,78704,seller,new,11,call,AGT-119,delivered,AGT-119,completed
+L-20039,AgentMatch Pro,2026-05-07 8:15:00,Paul,Lee,918-482-1166,paul.lee98@example.com,TRUE,TRUE,89108,buyer,new,9,call,,,AGT-102,completed
+L-20044,HomeFlow,2026-05-13 16:03:00,Daniel,Thomas,653-504-8025,daniel.thomas98@example.com,TRUE,TRUE,85032,seller,new,12,call,,,AGT-106,completed
+L-20013,LeadBridge,2026-05-07 15:28:00,Daniel,Harris,547-311-5073,daniel.harris60@example.com,TRUE,TRUE,78704,buyer,new,10,call,,,AGT-107,completed
+L-20194,LeadBridge,2026-05-11 14:32:00,Robert,Rodriguez,929.790.2262,robert.rodriguez64@example.com,TRUE,TRUE,30318,seller,new,170,call,AGT-117,delivered,AGT-117,completed
+L-20051,ListingLoop,2026-05-08 15:45:00,Matt,Brown,863-357-9165,matt.brown61@example.com,TRUE,TRUE,89108,seller,new,8,call,AGT-113,delivered,AGT-113,voicemail
+L-20134,ListingLoop,2026-05-12 7:59:00,Kevin,Williams,(246) 633-6644,kevin.williams61@example.com,TRUE,TRUE,37211,buyer,new,9,call,AGT-125,delivered,AGT-125,completed
+L-20124,OfferNest,2026-05-08 11:00:00,Michael,Brown,830-958-4920,michael.brown68@example.com,TRUE,TRUE,85032,seller,new,3,call,,,AGT-127,completed
+L-20048,OfferNest,2026-05-11 12:26:00,John,Garcia,+17996469056,john.garcia21@example.com,TRUE,TRUE,43215,buyer,new,6,call,AGT-126,delivered,AGT-126,completed
+L-20143,SellFast Direct,2026-05-15 8:38:00,Robert,Jackson,+19413951844,robert.jackson43@example.com,TRUE,TRUE,63101,seller,new,11,call,AGT-114,delivered,AGT-114,completed
+L-20187,LeadBridge,2026-05-09 13:20:00,Michael,Clark,+13268037291,michael.clark32@example.com,TRUE,TRUE,78704,seller,new,271,call,AGT-139,delivered,AGT-139,no_answer
+L-20111,OfferNest,2026-05-14 4:46:00,Nancy,Clark,+16125741741,nancy.clark25@example.com,TRUE,TRUE,32801,seller,new,,,,,,
+L-20068,SellFast Direct,2026-05-14 7:03:00,Laura,Young,(874) 733-5941,laura.young55@example.com,,TRUE,89108,buyer,new,3,call,,,AGT-106,completed
+L-20109,OfferNest,2026-05-16 16:56:00,Lisa,Taylor,223.292.7442,lisa.taylor28@example.com,TRUE,TRUE,28269,seller,new,,,,,,
+L-20141,HomeFlow,2026-05-15 21:26:00,Maria,Lopez,858-887-7244,maria.lopez39@example.com,TRUE,TRUE,89108,seller,new,5,call,AGT-122,delivered,AGT-122,no_answer
+L-20164,HomeFlow,2026-05-16 13:06:00,Sarah,Perez,+18272457547,,TRUE,TRUE,85032,seller,new,7,sms,AGT-129,failed_err30006_landline,,
+L-20144,HomeFlow,2026-05-12 14:29:00,Matt,Jackson,8645676053,matt.jackson93@example.com,TRUE,TRUE,28269,seller,new,2,call,AGT-117,delivered,AGT-117,completed
+L-20118,OfferNest,2026-05-12 22:52:00,Megan,Davis,232-786-2800,megan.davis54@example.com,TRUE,TRUE,43215,seller,new,,,,,,
+L-20154,HomeFlow,2026-05-04 17:17:00,Ashley,Clark,8288097499,ashley.clark58@example.com,,TRUE,85032,seller,new,10,call,AGT-125,delivered,AGT-125,no_answer
+L-20076,AgentMatch Pro,2026-05-15 10:32:00,Rachel,Anderson,(379) 332-7229,rachel.anderson46@example.com,TRUE,TRUE,43215,seller,new,8,call,AGT-102,delivered,AGT-102,no_answer
+L-20019,AgentMatch Pro,2026-05-07 18:21:00,Rachel,Jackson,359.478.5616,rachel.jackson34@example.com,TRUE,TRUE,89108,seller,new,2,call,AGT-106,delivered,AGT-106,no_answer
+L-20003,OfferNest,2026-05-09 12:38:00,Greg,Hernandez,3042947224,,TRUE,TRUE,32801,seller,new,8,call,AGT-106,delivered,AGT-106,completed
+L-20016,LeadBridge,2026-05-05 16:04:00,Brian,Garcia,258.720.2312,brian.garcia16@example.com,TRUE,TRUE,85032,seller,new,11,call,AGT-106,delivered,AGT-106,completed
+L-20190,LeadBridge,2026-05-08 17:45:00,David,Johnson,2616079300,david.johnson54@example.com,TRUE,TRUE,43215,seller,new,293,call,AGT-135,delivered,AGT-135,completed
+L-20161,HomeFlow,2026-05-17 19:25:00,Kevin,Lewis,448-533-7161,kevin.lewis73@example.com,TRUE,TRUE,75217,seller,new,2,sms,AGT-136,failed_err30006_landline,,
+L-20088,AgentMatch Pro,2026-05-05 18:54:00,John,Johnson,856-692-7081,john.johnson11@example.com,TRUE,TRUE,37211,buyer,new,10,call,AGT-110,delivered,AGT-110,voicemail
+L-20034,SellFast Direct,2026-05-04 18:34:00,John,Clark,(631) 458-2341,john.clark29@example.com,TRUE,TRUE,63101,seller,new,5,call,AGT-113,delivered,AGT-113,no_answer
+L-20052,HomeFlow,2026-05-16 15:17:00,Michael,Hall,271.482.7798,michael.hall39@example.com,FALSE,TRUE,75217,buyer,new,4,call,,,AGT-129,no_answer
+L-20085,AgentMatch Pro,2026-05-16 15:53:00,Michael,Jones,+12795022657,michael.jones85@example.com,TRUE,TRUE,75217,seller,new,11,call,,,AGT-125,completed
+L-20001,LeadBridge,2026-05-07 9:47:00,Eric,Brown,(225) 959-5506,eric.brown70@example.com,TRUE,TRUE,75217,buyer,new,2,call,,,AGT-102,completed
+L-20196,LeadBridge,2026-05-13 12:07:00,Heather,Harris,527-477-2276,heather.harris7@example.com,TRUE,TRUE,85032,seller,new,232,call,AGT-105,delivered,AGT-105,voicemail
+L-20204,LeadBridge,2026-05-13 16:16:00,Tony,Wilson,(581) 902-2376,tony.wilson10@example.com,TRUE,TRUE,78704,seller,new,361,call,AGT-129,delivered,AGT-129,voicemail
+L-20006,LeadBridge,2026-05-07 18:35:00,Heather,Perez,669.346.5339,heather.perez55@example.com,TRUE,TRUE,43215,seller,new,5,call,AGT-109,delivered,AGT-109,no_answer
+L-20166,HomeFlow,2026-05-11 8:28:00,Matt,Lewis,+14117338912,matt.lewis58@example.com,TRUE,TRUE,78704,seller,new,3,sms,AGT-103,failed_err30006_landline,,
+L-20175,OfferNest,2026-05-16 18:28:00,John,Clark,(756) 575-9880,john.clark55@example.com,TRUE,TRUE,85032,seller,new,2,call,,,AGT-129,no_answer
+L-20167,ListingLoop,2026-05-07 15:11:00,Diana,Hernandez,863.311.3692,diana.hernandez43@example.com,TRUE,TRUE,43215,buyer,new,8,sms,AGT-115,failed_err30006_landline,,
+L-20024,SellFast Direct,2026-05-13 10:16:00,Chris,Anderson,820.723.2894,chris.anderson67@example.com,TRUE,TRUE,85032,seller,new,8,call,AGT-105,delivered,AGT-105,no_answer
+L-20010,LeadBridge,2026-05-06 17:30:00,Amanda,Walker,270.978.9727,amanda.walker68@example.com,,TRUE,43215,seller,new,10,call,,,AGT-113,no_answer
+L-20126,OfferNest,2026-05-09 7:00:00,Heather,Young,3796273880,,,TRUE,89108,seller,new,6,call,,,AGT-103,completed
+L-20202,LeadBridge,2026-05-07 12:09:00,Laura,Thompson,+15119211660,laura.thompson32@example.com,TRUE,TRUE,43215,seller,new,303,call,,,AGT-120,completed
+L-20080,HomeFlow,2026-05-13 7:22:00,Robert,Taylor,(652) 846-5961,robert.taylor58@example.com,TRUE,TRUE,63101,seller,new,6,call,AGT-105,delivered,AGT-105,completed
+L-20139,AgentMatch Pro,2026-05-08 22:55:00,Karen,Harris,+12456118191,karen.harris74@example.com,TRUE,TRUE,75217,seller,new,10,call,AGT-138,delivered,AGT-138,no_answer
+L-20127,OfferNest,2026-05-08 16:00:00,Linda,Young,543-491-8444,linda.young64@example.com,,TRUE,32801,buyer,new,6,call,AGT-113,delivered,AGT-113,no_answer
+L-20049,ListingLoop,2026-05-17 15:29:00,Chris,Brown,613.726.1018,chris.brown47@example.com,TRUE,TRUE,89108,buyer,new,2,call,,,AGT-114,completed
+L-20156,SellFast Direct,2026-05-09 19:17:00,Nancy,Brown,293-205-6050,nancy.brown12@example.com,,TRUE,43215,buyer,new,10,call,AGT-136,delivered,AGT-136,no_answer
+L-20037,HomeFlow,2026-05-14 14:45:00,Emily,Walker,+17013088102,emily.walker67@example.com,TRUE,TRUE,75217,buyer,new,9,call,AGT-128,delivered,AGT-128,no_answer
+L-20192,LeadBridge,2026-05-13 16:03:00,Robert,Young,644-318-8428,robert.young95@example.com,TRUE,TRUE,78704,seller,new,311,call,AGT-109,delivered,AGT-109,no_answer
+L-20146,SellFast Direct,2026-05-15 19:22:00,Greg,Walker,700.940.9037,greg.walker93@example.com,TRUE,TRUE,89108,seller,new,3,call,AGT-104,delivered,AGT-104,completed
+L-20163,AgentMatch Pro,2026-05-17 18:26:00,Ashley,Taylor,796.610.9755,ashley.taylor47@example.com,TRUE,TRUE,75217,seller,new,5,sms,AGT-107,failed_err30006_landline,,
+L-20182,OfferNest,2026-05-10 10:44:00,James,Brown,+13616518479,james.brown84@example.com,TRUE,TRUE,30318,seller,new,3,call,,,AGT-124,no_answer
+L-20159,AgentMatch Pro,2026-05-13 10:29:00,John,Davis,(938) 840-9123,john.davis39@example.com,,TRUE,43215,seller,new,11,call,AGT-125,delivered,AGT-125,no_answer
+L-20177,AgentMatch Pro,2026-05-08 16:34:00,Laura,Miller,+14112606747,laura.miller91@example.com,TRUE,TRUE,37211,seller,new,10,call,,,AGT-107,no_answer
+L-20185,OfferNest,2026-05-09 12:56:00,Robert,Davis,592-291-2678,robert.davis49@example.com,TRUE,TRUE,30318,seller,new,10,call,,,AGT-137,no_answer
+L-20152,LeadBridge,2026-05-17 12:01:00,Megan,Young,487-756-1539,megan.young76@example.com,FALSE,TRUE,43215,seller,new,6,call,AGT-111,delivered,AGT-111,no_answer
+L-20061,OfferNest,2026-05-06 19:14:00,Lisa,Harris,546.317.8673,lisa.harris51@example.com,FALSE,TRUE,28269,seller,new,8,call,,,AGT-101,no_answer
+L-20046,OfferNest,2026-05-06 19:19:00,Michael,Young,4723452169,michael.young37@example.com,TRUE,TRUE,78704,buyer,new,6,call,AGT-126,delivered,AGT-126,completed
+L-20045,SellFast Direct,2026-05-11 18:38:00,Sarah,Jackson,+12763601043,,TRUE,TRUE,37211,buyer,new,3,call,AGT-115,delivered,AGT-115,completed
+L-20091,SellFast Direct,2026-05-14 19:39:00,Karen,Martinez,324.248.4906,karen.martinez64@example.com,TRUE,TRUE,32801,seller,new,12,call,AGT-133,delivered,AGT-133,no_answer
+L-20189,LeadBridge,2026-05-04 12:59:00,Amanda,Perez,808.272.9655,amanda.perez50@example.com,TRUE,TRUE,43215,seller,new,269,call,AGT-112,delivered,AGT-112,completed
+L-20148,ListingLoop,2026-05-04 7:34:00,Matt,Lopez,(261) 832-8916,matt.lopez2@example.com,TRUE,TRUE,32801,seller,new,3,call,AGT-107,delivered,AGT-107,completed
+L-20198,LeadBridge,2026-05-10 7:14:00,Jessica,Clark,(451) 354-1104,jessica.clark82@example.com,TRUE,TRUE,28269,seller,new,324,call,AGT-125,delivered,AGT-125,no_answer
+L-20180,ListingLoop,2026-05-11 17:42:00,Amanda,Hernandez,795.202.2526,amanda.hernandez9@example.com,TRUE,TRUE,43215,seller,new,8,call,,,AGT-114,no_answer
+L-20137,SellFast Direct,2026-05-15 6:34:00,Karen,Walker,(203) 974-1372,karen.walker25@example.com,TRUE,TRUE,63101,buyer,new,3,call,AGT-107,delivered,AGT-107,no_answer
+L-20069,SellFast Direct,2026-05-13 15:18:00,Eric,Martin,(761) 929-6327,eric.martin13@example.com,TRUE,TRUE,32801,seller,new,8,call,AGT-129,delivered,AGT-129,completed
+L-20062,OfferNest,2026-05-14 10:30:00,Megan,Rodriguez,+17985907086,megan.rodriguez72@example.com,TRUE,TRUE,75217,seller,new,12,call,AGT-105,delivered,AGT-105,no_answer
+L-20169,AgentMatch Pro,2026-05-06 12:20:00,Greg,White,+12647912667,greg.white15@example.com,TRUE,TRUE,89108,seller,new,8,sms,AGT-139,failed_err30006_landline,,
+L-20203,LeadBridge,2026-05-05 14:06:00,Sarah,Smith,(614) 663-5093,sarah.smith18@example.com,TRUE,TRUE,63101,seller,new,342,call,,,AGT-115,completed
+L-20026,LeadBridge,2026-05-10 19:37:00,Jessica,Walker,2005115700,jessica.walker57@example.com,TRUE,TRUE,85032,buyer,new,4,call,,,AGT-106,completed
+L-20041,OfferNest,2026-05-15 15:48:00,Karen,Brown,9383976169,karen.brown95@example.com,TRUE,TRUE,37211,seller,new,3,call,,,AGT-113,completed
+L-20060,HomeFlow,2026-05-15 13:11:00,Nancy,Harris,334.292.5835,nancy.harris47@example.com,TRUE,TRUE,32801,seller,new,4,call,AGT-117,delivered,AGT-117,voicemail
+L-20150,ListingLoop,2026-05-05 13:24:00,Karen,White,(431) 507-2320,karen.white61@example.com,TRUE,TRUE,63101,seller,new,10,call,,,AGT-103,completed
+L-20197,LeadBridge,2026-05-04 12:12:00,Lisa,Hernandez,288.766.8483,lisa.hernandez39@example.com,TRUE,TRUE,85032,buyer,new,224,call,AGT-138,delivered,AGT-138,voicemail
+L-20136,HomeFlow,2026-05-14 18:34:00,Karen,Walker,203-974-1372,karen.walker49@example.com,TRUE,TRUE,85032,buyer,new,11,call,,,AGT-102,completed
+L-20121,OfferNest,2026-05-13 10:15:00,John,Jackson,5054305876,john.jackson89@example.com,TRUE,TRUE,28269,buyer,new,,,,,,
+L-20015,LeadBridge,2026-05-07 11:13:00,Laura,Jackson,(877) 935-8973,laura.jackson70@example.com,,TRUE,28269,seller,new,2,call,,,AGT-138,no_answer
+L-20072,AgentMatch Pro,2026-05-14 18:17:00,Karen,Lewis,+16397741430,karen.lewis98@example.com,TRUE,TRUE,28269,seller,new,2,call,AGT-112,delivered,AGT-112,no_answer
+L-20008,SellFast Direct,2026-05-06 14:00:00,Greg,Perez,548.314.5808,greg.perez34@example.com,,TRUE,30318,seller,new,12,call,,,AGT-120,completed
+L-20057,SellFast Direct,2026-05-08 17:00:00,Kevin,Jones,437.672.5161,kevin.jones37@example.com,FALSE,TRUE,30318,seller,new,9,call,,,AGT-123,no_answer
+L-20153,ListingLoop,2026-05-06 19:44:00,Megan,Allen,+17535397288,megan.allen65@example.com,,TRUE,63101,seller,new,8,call,AGT-115,delivered,AGT-115,no_answer
+L-20082,HomeFlow,2026-05-08 13:26:00,Brian,Moore,+18243626962,brian.moore7@example.com,TRUE,TRUE,78704,seller,new,3,call,AGT-136,delivered,AGT-136,no_answer
+L-20007,ListingLoop,2026-05-10 16:04:00,Diana,Brown,356.842.3621,diana.brown60@example.com,TRUE,TRUE,37211,seller,new,12,call,AGT-108,delivered,AGT-108,no_answer
+L-20047,AgentMatch Pro,2026-05-08 7:05:00,Maria,Allen,642.952.6280,maria.allen74@example.com,TRUE,TRUE,63101,seller,new,11,call,AGT-103,delivered,AGT-103,no_answer
+L-20070,ListingLoop,2026-05-08 12:09:00,Rachel,Brown,(520) 637-6120,rachel.brown12@example.com,TRUE,TRUE,78704,buyer,new,3,call,AGT-124,delivered,AGT-124,no_answer
+L-20100,OfferNest,2026-05-16 17:54:00,Diana,Williams,(662) 376-8292,diana.williams91@example.com,,TRUE,32801,seller,new,6,call,,,AGT-111,no_answer
+L-20083,AgentMatch Pro,2026-05-14 9:58:00,Heather,Lee,3535412335,heather.lee90@example.com,TRUE,TRUE,30318,seller,new,6,call,AGT-136,delivered,AGT-136,no_answer
+L-20129,OfferNest,2026-05-07 12:00:00,Heather,Davis,+12064677284,heather.davis43@example.com,TRUE,TRUE,75217,seller,new,6,call,AGT-124,delivered,AGT-124,completed
+L-20145,ListingLoop,2026-05-13 2:29:00,Matt,Jackson,864.567.6053,matt.jackson6@example.com,TRUE,TRUE,85032,seller,new,8,call,AGT-137,delivered,AGT-137,completed
+L-20089,SellFast Direct,2026-05-04 13:32:00,Karen,Walker,+16615571436,karen.walker11@example.com,TRUE,TRUE,85032,seller,new,7,call,AGT-107,delivered,AGT-107,voicemail
+L-20125,OfferNest,2026-05-07 8:00:00,Megan,Clark,3402053587,megan.clark61@example.com,TRUE,TRUE,85032,seller,new,7,call,AGT-119,delivered,AGT-119,no_answer
+L-20201,LeadBridge,2026-05-06 8:10:00,David,Jones,9887982785,david.jones41@example.com,TRUE,TRUE,78704,seller,new,327,call,AGT-114,delivered,AGT-114,completed
+L-20123,OfferNest,2026-05-14 11:02:00,Lisa,White,280-554-8247,lisa.white28@example.com,TRUE,TRUE,32801,seller,new,,,,,,
+L-20092,AgentMatch Pro,2026-05-09 8:33:00,Karen,Martin,626.391.2402,karen.martin65@example.com,TRUE,TRUE,63101,buyer,new,9,call,AGT-103,delivered,AGT-103,completed
+L-20183,OfferNest,2026-05-10 17:19:00,John,Williams,580-880-3711,john.williams97@example.com,TRUE,TRUE,43215,seller,new,3,call,,,AGT-101,no_answer
+L-20098,AgentMatch Pro,2026-05-06 17:28:00,Eric,Lopez,(570) 592-1530,eric.lopez98@example.com,,TRUE,75217,seller,new,10,call,,,AGT-124,no_answer
+L-20005,ListingLoop,2026-05-09 19:49:00,Daniel,Rodriguez,8559044598,daniel.rodriguez41@example.com,TRUE,TRUE,37211,seller,new,5,call,AGT-137,delivered,AGT-137,completed
+L-20140,AgentMatch Pro,2026-05-15 13:26:00,Maria,Lopez,858-887-7244,maria.lopez49@example.com,TRUE,TRUE,32801,buyer,new,10,call,AGT-127,delivered,AGT-127,completed
+L-20162,SellFast Direct,2026-05-14 14:08:00,Scott,Miller,+16484982133,scott.miller31@example.com,TRUE,TRUE,30318,buyer,new,3,sms,AGT-125,failed_err30006_landline,,
+L-20064,HomeFlow,2026-05-04 18:23:00,Eric,Brown,+17018307686,eric.brown31@example.com,TRUE,TRUE,78704,seller,new,10,call,,,AGT-123,completed
+L-20135,OfferNest,2026-05-12 13:59:00,Kevin,Williams,2466336644,kevin.williams99@example.com,TRUE,TRUE,28269,buyer,new,4,call,AGT-135,delivered,AGT-135,no_answer
+L-20205,LeadBridge,2026-05-11 7:10:00,Tony,Lewis,5393251699,tony.lewis56@example.com,TRUE,TRUE,89108,seller,new,227,call,,,AGT-128,completed
+L-20165,LeadBridge,2026-05-09 7:30:00,Matt,Clark,(895) 802-9199,matt.clark54@example.com,TRUE,TRUE,78704,seller,new,6,sms,AGT-123,failed_err30006_landline,,

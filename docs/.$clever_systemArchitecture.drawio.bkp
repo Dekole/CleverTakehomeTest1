@@ -1,0 +1,43 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="R42Tr1S50ZPk_uYSe1gQ">
+    <mxGraphModel dx="1078" dy="661" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="O-LflNIosq2N44MmSeos-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="CleverETL_Switch.py" vertex="1">
+          <mxGeometry height="40" width="120" x="240" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="O-LflNIosq2N44MmSeos-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="leads.csv" vertex="1">
+          <mxGeometry height="40" width="120" x="80" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="O-LflNIosq2N44MmSeos-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="leads_outreach_flat.py" vertex="1">
+          <mxGeometry height="40" width="200" x="280" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="O-LflNIosq2N44MmSeos-5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="CleverETL_Switch.py" vertex="1">
+          <mxGeometry height="40" width="120" x="290" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="O-LflNIosq2N44MmSeos-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;" value="outreach_log.csv" vertex="1">
+          <mxGeometry height="40" width="120" x="80" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="O-LflNIosq2N44MmSeos-7" parent="1" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;" value="" vertex="1">
+          <mxGeometry height="260" width="200" x="410" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="O-LflNIosq2N44MmSeos-8" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="checker.py" vertex="1">
+          <mxGeometry height="40" width="120" x="560" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="O-LflNIosq2N44MmSeos-9" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="lof_nomatch.py" vertex="1">
+          <mxGeometry height="20" width="200" x="600" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="O-LflNIosq2N44MmSeos-10" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="lof_dateoutoforder.py" vertex="1">
+          <mxGeometry height="20" width="200" x="600" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="O-LflNIosq2N44MmSeos-11" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="lof_responseclassification.py" vertex="1">
+          <mxGeometry height="20" width="200" x="600" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="O-LflNIosq2N44MmSeos-12" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="leads_dup.py" vertex="1">
+          <mxGeometry height="40" width="200" x="280" y="360" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
