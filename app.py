@@ -28,11 +28,14 @@ WORKING_DIR = OUT_DIR / "working"
 STATE_FILE = OUT_DIR / "pipeline_state.json"
 
 # ── Rate limiting ──────────────────────────────────────────────────────────────
+# Set RATE_LIMIT_ENABLED=true in .env to activate. Defaults to off.
+_RATE_LIMIT_ENABLED = os.environ.get("RATE_LIMIT_ENABLED", "false").lower() == "true"
 limiter = Limiter(
     get_remote_address,
     app=app,
     default_limits=[],
     storage_uri="memory://",
+    enabled=_RATE_LIMIT_ENABLED,
 )
 
 # ── Basic Auth ─────────────────────────────────────────────────────────────────
