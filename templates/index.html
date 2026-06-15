@@ -55,8 +55,9 @@
 <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
   <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
     <div>
-      <h1 class="text-lg font-semibold text-gray-900 leading-tight">
+      <h1 class="text-lg font-semibold text-gray-900 leading-tight flex items-center gap-2">
         Lead Compliance &amp; Outreach Reconciliation
+        <span class="text-xs font-mono font-normal text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">v1.1</span>
       </h1>
       <p class="text-xs text-gray-400 mt-0.5">Sales Operations · Compliance Triage &amp; Data Export</p>
     </div>
@@ -92,8 +93,9 @@
       <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Inputs</h2>
     </div>
     <div class="px-6 py-5">
+      <p class="text-xs text-gray-400 mb-4">Default data files are preloaded — uploading is optional. Only upload if you want to use different data.</p>
       <form id="process-form" method="POST" action="/process" enctype="multipart/form-data">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
             <label class="block text-xs font-medium text-gray-500 mb-1.5">Leads file</label>
             <input type="file" name="leads_file" accept=".csv"
@@ -101,7 +103,7 @@
                      focus:outline-none focus:ring-2 focus:ring-blue-500
                      file:mr-3 file:py-1 file:px-2 file:rounded file:border-0
                      file:text-xs file:bg-gray-100 file:text-gray-600 file:cursor-pointer" />
-            <p class="text-xs text-gray-400 mt-1">Default: leads.csv</p>
+            <p class="text-xs text-gray-400 mt-1">If no file chosen, default will be used</p>
           </div>
           <div>
             <label class="block text-xs font-medium text-gray-500 mb-1.5">Outreach log</label>
@@ -110,21 +112,7 @@
                      focus:outline-none focus:ring-2 focus:ring-blue-500
                      file:mr-3 file:py-1 file:px-2 file:rounded file:border-0
                      file:text-xs file:bg-gray-100 file:text-gray-600 file:cursor-pointer" />
-            <p class="text-xs text-gray-400 mt-1">Default: outreach_log.csv</p>
-          </div>
-          <div>
-            <label class="block text-xs font-medium text-gray-500 mb-1.5">Date start</label>
-            <input type="date" name="date_start" value="{{ form_date_start }}"
-              class="block w-full text-sm border border-gray-300 rounded-md px-3 py-2 bg-white text-gray-700
-                     focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            <p class="text-xs text-gray-400 mt-1">Filter on received_at</p>
-          </div>
-          <div>
-            <label class="block text-xs font-medium text-gray-500 mb-1.5">Date end</label>
-            <input type="date" name="date_end" value="{{ form_date_end }}"
-              class="block w-full text-sm border border-gray-300 rounded-md px-3 py-2 bg-white text-gray-700
-                     focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            <p class="text-xs text-gray-400 mt-1">Filter on received_at</p>
+            <p class="text-xs text-gray-400 mt-1">If no file chosen, default will be used</p>
           </div>
         </div>
       </form>
