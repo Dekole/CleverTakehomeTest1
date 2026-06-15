@@ -1,7 +1,7 @@
 import pandas as pd
 
 CHECK_ID = "borderline"
-LABEL = "Borderline legal TCPA"
+LABEL = "TCPA — SMS Sent, Consent Unrecorded"
 FLAG_LABEL = "TCPA_BORDERLINE"
 SEVERITY = "warn"
 CATEGORY = "legal"
