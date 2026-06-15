@@ -1,7 +1,7 @@
 import pandas as pd
 
 CHECK_ID = "consent_missing"
-LABEL = "Consent missing / TCPA concern"
+LABEL = "TCPA — SMS Consent Not Recorded"
 FLAG_LABEL = "CONSENT_GAP"
 SEVERITY = "concern"
 CATEGORY = "legal"

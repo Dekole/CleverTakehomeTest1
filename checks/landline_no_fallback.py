@@ -1,7 +1,7 @@
 import pandas as pd
 
 CHECK_ID = "landline_no_fallback"
-LABEL = "SMS-to-landline, no call fallback"
+LABEL = "Landline SMS — Call Fallback Missed"
 FLAG_LABEL = "LANDLINE"
 SEVERITY = "warn"
 CATEGORY = "ops"
