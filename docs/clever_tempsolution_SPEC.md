@@ -325,3 +325,13 @@ Build in this order. Each phase should leave the app in a runnable, demoable sta
 - `run_checks.py` headless runner (§9.4).
 - Archive retention from §9.5 (`ARCHIVE_RETENTION`, prune oldest entries).
 - **Done when:** running `run_checks.py` twice produces two archive entries per check with `new_count = 0`, and archive directories don't grow past the retention cap.
+
+**Phase 6 — Automation UI (placeholder / future)**
+- UI section "2. Automation" added between Inputs and Summary with two disabled placeholder cards.
+- **Email Alerts card:** text input for email address + "Save" button (disabled, opacity-60). Intended to send a summary email when `on_new_flags` fires (new flags detected since last run). Will be wired to the `on_new_flags` hook in `runner.py` in a future release. Badge: "Coming in v1.2".
+- **Recurring Run card:** dropdown (Every day / Every Monday / Every weekday / Every Sunday) + "Schedule" button (disabled, opacity-60). Intended to configure a cron entry that calls `run_checks.py` on a schedule, allowing the app to run headlessly without manual intervention. Already supported by `run_checks.py` (§9.4) — only the scheduling UI and cron management are deferred.
+- **Implementation path (when ready):**
+  1. `on_new_flags(check_id, new_lead_ids, out_dir)` in `runner.py` — already implemented, currently logs to `out/triggers.log`. Extend to call an SMTP sender when `EMAIL_ALERT` env var is set.
+  2. A `/save-alert-email` POST endpoint persists the email to `out/config.json`.
+  3. Cron scheduling: a `/schedule` POST endpoint writes or replaces a crontab entry invoking `run_checks.py` at the chosen interval. Requires the container to run with cron access, or an external orchestration tool (e.g., GitHub Actions, DO scheduled functions).
+- **Done when (Phase 6 complete):** Saving an email triggers a test email on the next flag detection; scheduling creates a verifiable cron entry; both actions are confirmed via a toast/status message in the UI.

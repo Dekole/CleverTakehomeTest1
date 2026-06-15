@@ -135,13 +135,70 @@
     </div>
   </section>
 
+  <!-- ── 2. Automation ───────────────────────────────────────────── -->
+  <section class="bg-white rounded-lg border border-gray-200 shadow-sm">
+    <div class="px-6 py-4 border-b border-gray-100 flex items-center gap-3">
+      <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-semibold">2</span>
+      <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Automation</h2>
+      <span class="text-xs text-gray-400">Planned for v1.2</span>
+    </div>
+    <div class="px-6 py-5 grid grid-cols-1 md:grid-cols-2 gap-5">
+
+      <!-- Email alerts -->
+      <div class="border border-gray-200 rounded-lg p-5 bg-gray-50 opacity-60">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <span class="text-base">&#9993;</span>
+            <h3 class="text-sm font-semibold text-gray-700">Email Alerts</h3>
+          </div>
+          <span class="text-xs font-medium text-gray-400 bg-white border border-gray-200 rounded-full px-2 py-0.5">Coming in v1.2</span>
+        </div>
+        <p class="text-xs text-gray-400 mb-4 leading-relaxed">Get notified when new compliance flags are detected on a run. Triggers on any newly flagged lead.</p>
+        <div class="flex gap-2">
+          <input type="email" placeholder="your@email.com" disabled
+            class="flex-1 text-sm border border-gray-200 rounded-md px-3 py-2 bg-white text-gray-400 cursor-not-allowed" />
+          <button disabled
+            class="px-4 py-2 text-sm font-medium text-gray-400 bg-white border border-gray-200 rounded-md cursor-not-allowed">
+            Save
+          </button>
+        </div>
+      </div>
+
+      <!-- Recurring run -->
+      <div class="border border-gray-200 rounded-lg p-5 bg-gray-50 opacity-60">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <span class="text-base">&#128337;</span>
+            <h3 class="text-sm font-semibold text-gray-700">Recurring Run</h3>
+          </div>
+          <span class="text-xs font-medium text-gray-400 bg-white border border-gray-200 rounded-full px-2 py-0.5">Coming in v1.2</span>
+        </div>
+        <p class="text-xs text-gray-400 mb-4 leading-relaxed">Schedule automatic compliance runs. Uses the same pipeline as the Process button, with full archive history.</p>
+        <div class="flex gap-2">
+          <select disabled
+            class="flex-1 text-sm border border-gray-200 rounded-md px-3 py-2 bg-white text-gray-400 cursor-not-allowed">
+            <option>Every day</option>
+            <option>Every Monday</option>
+            <option>Every weekday</option>
+            <option>Every Sunday</option>
+          </select>
+          <button disabled
+            class="px-4 py-2 text-sm font-medium text-gray-400 bg-white border border-gray-200 rounded-md cursor-not-allowed">
+            Schedule
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   {% if report %}
 
-  <!-- ── 2. Summary cards ──────────────────────────────────────── -->
+  <!-- ── 3. Summary cards ──────────────────────────────────────── -->
   <section class="bg-white rounded-lg border border-gray-200 shadow-sm">
     <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between flex-wrap gap-3">
       <div class="flex items-center gap-3">
-        <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-semibold">2</span>
+        <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-semibold">3</span>
         <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Summary</h2>
       </div>
       <div class="flex items-center gap-4 text-xs text-gray-400 flex-wrap">
@@ -195,7 +252,7 @@
   <section class="bg-white rounded-lg border border-gray-200 shadow-sm">
     <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between flex-wrap gap-3">
       <div class="flex items-center gap-3">
-        <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-semibold">3</span>
+        <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-semibold">4</span>
         <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Leads</h2>
         <span id="filter-label" class="text-xs text-gray-400"></span>
       </div>
@@ -235,7 +292,7 @@
   <!-- ── 4. Lead detail ────────────────────────────────────────── -->
   <section id="detail-section" class="bg-white rounded-lg border border-gray-200 shadow-sm">
     <div class="px-6 py-4 border-b border-gray-100 flex items-center gap-3">
-      <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-semibold">4</span>
+      <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-semibold">5</span>
       <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Lead detail</h2>
       <span id="detail-lead-id" class="text-xs font-mono text-gray-400"></span>
     </div>
@@ -252,7 +309,7 @@
   <!-- ── 5. Outreach table ─────────────────────────────────────── -->
   <section id="outreach-section" class="bg-white rounded-lg border border-gray-200 shadow-sm">
     <div class="px-6 py-4 border-b border-gray-100 flex items-center gap-3">
-      <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-semibold">5</span>
+      <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-semibold">6</span>
       <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Outreach attempts</h2>
       <span id="outreach-label" class="text-xs text-gray-400"></span>
     </div>
@@ -277,10 +334,10 @@
     </div>
   </section>
 
-  <!-- ── 6. Exports ──────────────────────────────────────────── -->
+  <!-- ── 7. Exports ──────────────────────────────────────────── -->
   <section class="bg-white rounded-lg border border-gray-200 shadow-sm">
     <div class="px-6 py-4 border-b border-gray-100 flex items-center gap-3">
-      <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-semibold">6</span>
+      <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 text-gray-500 text-xs font-semibold">7</span>
       <h2 class="text-sm font-semibold text-gray-700 uppercase tracking-wide">Exports</h2>
       <span class="text-xs text-gray-400">Downloads reflect the current run</span>
     </div>
