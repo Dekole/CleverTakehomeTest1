@@ -236,7 +236,9 @@ def process():
         else:
             outreach_path = DATA_DIR / "outreach_log.csv"
     except ValueError as exc:
-        return render_template("index.html", report=None, error=str(exc))
+        return render_template("index.html", report=None, error=str(exc),
+                               validation_error=True,
+                               visitor_count=_unique_visitor_count())
 
     try:
         _save_state(date_start, date_end, leads_path, outreach_path)

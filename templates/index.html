@@ -57,7 +57,7 @@
     <div>
       <h1 class="text-lg font-semibold text-gray-900 leading-tight flex items-center gap-2">
         Lead Compliance &amp; Outreach Reconciliation
-        <span class="text-xs font-mono font-normal text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">v1.1.4</span>
+        <span class="text-xs font-mono font-normal text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">v1.1.5</span>
       </h1>
       <p class="text-xs text-gray-400 mt-0.5">Sales Operations · Compliance Triage &amp; Data Export</p>
     </div>
@@ -82,7 +82,11 @@
   <!-- ── Error banner ──────────────────────────────────────────── -->
   {% if error %}
   <div class="bg-red-50 border border-red-300 text-red-700 rounded-lg px-5 py-4 text-sm">
-    <strong>Pipeline error:</strong> {{ error }}
+    {% if validation_error %}
+    <strong>File rejected:</strong> {{ error }} — please check the file and try again.
+    {% else %}
+    <strong>Error:</strong> {{ error }}
+    {% endif %}
   </div>
   {% endif %}
 
