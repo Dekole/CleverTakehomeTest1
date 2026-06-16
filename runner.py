@@ -283,6 +283,11 @@ def _run_check(check_module, enriched_df, config, total_leads, total_outreach, c
         count = int(df["lead_id"].nunique()) if ("lead_id" in df.columns and not df.empty) else 0
         pct = round(count / total_leads * 100, 1) if total_leads > 0 else 0.0
 
+        # For legal checks with per-attempt rows, also track reachout-level percentage
+        attempt_pct = None
+        if category == "legal" and "attempt_id" in df.columns and not df.empty:
+            attempt_pct = round(len(df) / total_outreach * 100, 1) if total_outreach > 0 else 0.0
+
         current_ids = set(df["lead_id"].unique()) if ("lead_id" in df.columns and not df.empty) else set()
 
         # Diff before writing (so prev_files doesn't include this run)
@@ -317,6 +322,7 @@ def _run_check(check_module, enriched_df, config, total_leads, total_outreach, c
             "severity": severity,
             "count": count,
             "pct": pct,
+            "attempt_pct": attempt_pct,
             "run_at": run_at,
             "new_count": len(new_ids),
             "resolved_count": len(resolved_ids),

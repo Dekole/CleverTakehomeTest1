@@ -57,7 +57,7 @@
     <div>
       <h1 class="text-lg font-semibold text-gray-900 leading-tight flex items-center gap-2">
         Lead Compliance &amp; Outreach Reconciliation
-        <span class="text-xs font-mono font-normal text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">v1.1.8</span>
+        <span class="text-xs font-mono font-normal text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">v1.1.9</span>
       </h1>
       <p class="text-xs text-gray-400 mt-0.5">Sales Operations · Compliance Triage &amp; Data Export</p>
     </div>
@@ -239,9 +239,11 @@
           <div class="text-sm text-gray-600 font-medium leading-snug pr-12 min-h-[36px]">{{ card.label }}</div>
           <div class="mt-3 flex items-baseline gap-2">
             <span class="kpi-num text-3xl font-bold">{{ card.count }}</span>
-            <span class="text-sm text-gray-400">{{ card.pct }}%</span>
+            <span class="text-sm text-gray-400">{{ card.pct }}% of leads</span>
           </div>
-
+          {% if card.attempt_pct is not none %}
+          <div class="text-xs text-gray-400 mt-1">{{ card.attempt_pct }}% of reachouts</div>
+          {% endif %}
           <div class="text-xs text-gray-400 mt-0.5">as of {{ card.run_at }}</div>
         </div>
         {% endfor %}
