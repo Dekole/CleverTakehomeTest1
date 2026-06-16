@@ -280,16 +280,8 @@ def _run_check(check_module, enriched_df, config, total_leads, total_outreach, c
         archive_dir = check_dir / "archive"
         archive_dir.mkdir(parents=True, exist_ok=True)
 
-        # Attempt-based: legal checks whose output includes attempt_id (one row per outreach attempt)
-        is_attempt_based = (category == "legal") and ("attempt_id" in df.columns) and not df.empty
-        if is_attempt_based:
-            count = len(df)
-            pct = round(count / total_outreach * 100, 1) if total_outreach > 0 else 0.0
-            count_basis = "attempt"
-        else:
-            count = int(df["lead_id"].nunique()) if ("lead_id" in df.columns and not df.empty) else 0
-            pct = round(count / total_leads * 100, 1) if total_leads > 0 else 0.0
-            count_basis = "lead"
+        count = int(df["lead_id"].nunique()) if ("lead_id" in df.columns and not df.empty) else 0
+        pct = round(count / total_leads * 100, 1) if total_leads > 0 else 0.0
 
         current_ids = set(df["lead_id"].unique()) if ("lead_id" in df.columns and not df.empty) else set()
 
@@ -325,8 +317,6 @@ def _run_check(check_module, enriched_df, config, total_leads, total_outreach, c
             "severity": severity,
             "count": count,
             "pct": pct,
-            "count_basis": count_basis,
-            "total_outreach": total_outreach,
             "run_at": run_at,
             "new_count": len(new_ids),
             "resolved_count": len(resolved_ids),
